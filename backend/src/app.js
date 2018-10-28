@@ -2,7 +2,7 @@ import {GraphQLServer} from 'graphql-yoga';
 import axios from 'axios'
 const Sequelize = require("sequelize")
 
-const sequelize = new Sequelize("movie_api", "root", "", {
+const sequelize = new Sequelize("movie_api", "root", "root", {
 	host: "localhost",
 	dialect: "mysql",
 	operatorAliases: false,
@@ -28,7 +28,10 @@ const Movie = sequelize.define('movie', {
 	},
 	votes: {
 		type: Sequelize.FLOAT
-    },
+    	},
+	posterUrl: {
+		type: Sequelize.STRING
+	},
     directorId: {
         type: Sequelize.INTEGER
     }
@@ -49,12 +52,16 @@ const typeDefs = `
         directors: [Director]
         top10: [Movie]
     }
+    type Mutation {
+	    addVote(id: ID, userVote:Float): Movie!
+    }
     type Movie {
         title: String
         genre: String
         rating: Float
         votes: Float
         imdbID: String
+	posterUrl: String
         id: ID!
         director: Director
     }
@@ -92,6 +99,16 @@ const resolvers = {
                 order: sequelize.literal('rating DESC')
             })
         }
+    },
+    Mutation: {
+	    addVote(parent, args, info){
+		    Movie.findByPk(args.id).then((movie) => {
+			    movie.rating = (movie.rating + args.userVote)/2
+			    movie.votes += 1
+			    movie.save()
+		    })
+		    return Movie.findByPk(args.id)
+	    }
     },
     Movie: {
         director(parent, args, ctx){
