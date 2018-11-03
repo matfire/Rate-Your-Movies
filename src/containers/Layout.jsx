@@ -4,6 +4,7 @@ import {NotificationContainer} from 'react-notifications'
 
 class Layout extends React.Component {
 	render() {
+		const session = localStorage.getItem("TMDB_session_id")
 		return(
 			<div>
 				<NavBarLayout></NavBarLayout>
