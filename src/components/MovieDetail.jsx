@@ -1,7 +1,6 @@
 import React from 'react'
-import {AppContext} from '../App'
-import { Card, CardImg, CardText, CardBody,
-	CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardImg, CardBody,
+	CardTitle } from 'reactstrap';
 import axios from 'axios'
 
 
@@ -18,20 +17,17 @@ class MovieDetail extends React.Component {
 	}
 	render() {
 		return(
-		<AppContext.Consumer>
-			{(context) => {
-				return(
 					<div>
+						<a href={"/movies/" + this.props.id}>
 						<Card>
 							<CardImg top width="100%" src={"https://image.tmdb.org/t/p/w154"+ this.state.details.poster_path}/>
 							<CardBody>
 								<CardTitle>{this.state.details.original_title}</CardTitle>
 							</CardBody>
 						</Card>
+						</a>
 					</div>
-			)}}
-		</AppContext.Consumer>
-		)
+			)
 	}
 }
 
