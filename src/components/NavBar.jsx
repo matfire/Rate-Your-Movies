@@ -8,6 +8,8 @@ import reactstrapCjs, {
 	NavItem,
 	NavLink,} from 'reactstrap';
 
+import SearchBar from './SearchBar'
+
 class NavBarComponent extends React.Component {
 	state = {
 		isOpen:false
@@ -27,6 +29,9 @@ class NavBarComponent extends React.Component {
 						<Nav className="ml-auto" navbar>
 							<NavItem>
 								<NavLink href="/trending"><i className="fas fa-trophy"></i> Trending</NavLink>
+							</NavItem>
+							<NavItem>
+								<SearchBar />
 							</NavItem>
 						</Nav>
 					</Collapse>
