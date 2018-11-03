@@ -42,7 +42,6 @@ class SearchResults extends React.Component {
 		return(
 			<div className="row">
 				<Loading show={this.state.loading} color="green"/>
-				<p>{this.props.query}</p>
 				{this.state.data.map((movie, index) => {
 					if (index % 7 === 0) {
 						return(
