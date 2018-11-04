@@ -51,7 +51,7 @@ class DetailedView extends React.Component {
 								<p>{company.name}</p>
 							</div>
 							<div className="col-sm-4">
-								<img src={"https://image.tmdb.org/t/p/w185" + company.logo_path}/>
+								<img src={"https://image.tmdb.org/t/p/w185" + company.logo_path} alt={company.name}/>
 							</div>
 						</div>
 					</div>

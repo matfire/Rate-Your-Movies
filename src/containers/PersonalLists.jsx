@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Table} from 'reactstrap'
 
 class PersonalLists extends React.Component {
 	state = {
@@ -14,13 +15,30 @@ class PersonalLists extends React.Component {
 			this.setState({
 				lists:res.data.results
 			})
-			console.log(res.data)
 		}).catch(err => {console.log(err)})
 	}
 	render() {
 		return(
-			<ul>
-			</ul>
+			<div className="mt-5">
+				<Table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Poster</th>
+						</tr>
+					</thead>
+					<tbody>
+						{this.state.lists.map((list) => (
+							<tr key={list.id}>
+								<th scope="row"><a href={"/list/" + list.id}>{list.name}</a></th>
+								<th>{list.description}</th>
+								<th><img src={"https://image.tmdb.org/t/p/w154"+ list.poster_path} alt={list.name}/></th>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</div>
 		)
 	}
 }

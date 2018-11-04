@@ -1,9 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import {Input} from 'reactstrap'
 import {AppContext} from '../App'
-import PropTypes from 'proptypes'
-import {withRouter, Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 class SearchBar extends React.Component {
 	constructor(props){
