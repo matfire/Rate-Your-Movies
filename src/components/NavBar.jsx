@@ -33,7 +33,7 @@ class NavBarComponent extends React.Component {
 					<NavLink href="/list"><i className="fas fa-clipboard-list"></i>Your lists</NavLink>
 				</NavItem>
 				<NavItem>
-					<NavLink href="/favorites"><i className="fas fa-heart"></i>Your Favorites</NavLink>
+					<NavLink href="/favorites"><i className="far fa-heart"></i>Your Favorites</NavLink>
 				</NavItem>
 				<NavItem>
 					<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash} height={40} alt={User.username}/>
