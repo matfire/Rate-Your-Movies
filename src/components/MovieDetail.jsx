@@ -14,9 +14,12 @@ class MovieDetail extends React.Component {
 			this.setState({
 				details:res.data
 			})
-			axios.get("https://api.themoviedb.org/3/movie/"+ this.props.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
-				this.setState({favorite: res.data.favorite})
-			})
+			const session = localStorage.getItem("TMDB_session_id")
+			if (session) {
+				axios.get("https://api.themoviedb.org/3/movie/"+ this.props.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
+					this.setState({favorite: res.data.favorite})
+				})
+			}
 		})
 	}
 	getFavorite = (id) => {

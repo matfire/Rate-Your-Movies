@@ -9,6 +9,7 @@ class DetailedView extends React.Component {
 	state = {
 		details: [],
 		reviews: [],
+		favorite: false,
 		activeTab: '1'
 	}
 	componentDidMount() {
@@ -16,6 +17,10 @@ class DetailedView extends React.Component {
 			this.setState({
 				details:res.data
 			})
+			const session = localStorage.getItem("TMDB_session_id")
+			if(session) {
+				this.getFavorite(this.props.match.params.id)
+			}
 		})
 		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id +"/reviews?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US").then(res => {
 			this.setState({
@@ -60,7 +65,26 @@ class DetailedView extends React.Component {
 			))
 		)}
 	}
-
+	getFavorite = (id) => {
+		axios.get("https://api.themoviedb.org/3/movie/"+ id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
+			this.setState({favorite: res.data.favorite})
+		})
+	}
+	handleFavorite = (id) => {
+		axios.post("https://api.themoviedb.org/3/account/"+ localStorage.getItem("User").id +"/favorite?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), {
+			media_type : "movie",
+			media_id: id,
+			favorite: !this.state.favorite
+		}).then((res) => {this.getFavorite(id)})
+	}
+	renderFavorite = (heart_class) => {
+		const session = localStorage.getItem("TMDB_session_id")
+		if (session) {
+			return(
+				<i className={heart_class} onClick={() => {this.handleFavorite(this.props.match.params.id)}}></i>
+			)
+		}
+	}
 	renderCountries = () => {
 		if (this.state.details.production_countries) {
 			const items = this.state.details.production_countries.map((countri) => (
@@ -77,6 +101,13 @@ class DetailedView extends React.Component {
 		const reviews = this.renderReviews()
 		const productors = this.renderProductors()
 		const countries = this.renderCountries()
+		let heart_class = "fa-heart"
+		if (this.state.favorite === true){
+			heart_class = "fas " + heart_class
+		} else {
+			heart_class = "far " + heart_class
+		}
+		const favorite = this.renderFavorite(heart_class)
 		return(
 			<div>
 				<div className="row">
@@ -87,7 +118,7 @@ class DetailedView extends React.Component {
 						<Card>
 							<CardBody>
 								<CardTitle>{this.state.details.original_title}</CardTitle>
-								<CardSubtitle>{this.state.details.tagline}</CardSubtitle>
+								<CardSubtitle>{this.state.details.tagline}  {favorite}</CardSubtitle>
 								<CardText>
 									<br></br>
 									<p>{this.state.details.overview}</p>
