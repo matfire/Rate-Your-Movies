@@ -39,7 +39,7 @@ class FavoritesView extends React.Component {
 		if (this.state.results) {
 			let results = this.state.results.map((item) => (
 				<tr key={item.id}>
-					<th><img src={"https://image.tmdb.org/t/p/w154"+ item.poster_path} alt={item.title} /></th>
+					<th><a href={"/movies/" + item.id}><img src={"https://image.tmdb.org/t/p/w154"+ item.poster_path} alt={item.title} /></a></th>
 					<th>{item.title}</th>
 					<th>{item.overview}</th>
 					<th><Button color="danger" onClick={() => {this.removeFavorite(item.id)}}>Remove from Favorites</Button></th>
