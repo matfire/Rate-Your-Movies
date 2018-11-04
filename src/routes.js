@@ -5,6 +5,7 @@ import DetailedView from './containers/DetailedView'
 import SearchResults from './containers/SearchResults'
 import LoginView from './containers/LoginView'
 import PersonalLists from './containers/PersonalLists'
+import ListDetailView from './containers/ListDetailView'
 
 export default class BaseRouter extends React.Component {
 	render() {
@@ -16,7 +17,10 @@ export default class BaseRouter extends React.Component {
 								<Route exact path="/movies/search-result" render={(props) => <SearchResults {...props} query={this.props.searchQuery} />}/>
 								<Route path="/movies/:id" component={DetailedView} />
 							</Switch>
-							<Route exact path="/list" component={PersonalLists} />
+							<Switch>
+								<Route path="/list/:id" component={ListDetailView}/>
+								<Route exact path="/list" component={PersonalLists} />
+							</Switch>
 						</div>
 		)
 	}

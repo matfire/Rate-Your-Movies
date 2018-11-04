@@ -19,6 +19,7 @@ class NavBarComponent extends React.Component {
 	}
 	renderLoggedInNavigation = () => {
 		const session = localStorage.getItem("TMDB_session_id")
+		const User = localStorage.getItem("User")
 		if (!session) {
 			return(
 				<NavItem>
@@ -33,6 +34,9 @@ class NavBarComponent extends React.Component {
 				</NavItem>
 				<NavItem>
 					<NavLink href="/favorites"><i className="fas fa-heart"></i>Your Favorites</NavLink>
+				</NavItem>
+				<NavItem>
+					<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash} height={40}/>
 				</NavItem>
 			</React.Fragment>
 		)
