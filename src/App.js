@@ -24,7 +24,6 @@ class App extends Component {
   }
   render() {
     const session = localStorage.getItem("TMDB_session_id")
-    console.log(session)
     return (
       <div className="App">
         <AppContext.Provider value={this.state}>

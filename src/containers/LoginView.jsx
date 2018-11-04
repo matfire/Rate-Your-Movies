@@ -36,7 +36,6 @@ class LoginView extends React.Component {
 	}
 	render() {
 		const session_id = localStorage.getItem("TMDB_session_id")
-		console.log(session_id)
 		return(
 			<p>This page will redirect you to TMDB's access page {session_id}</p>
 		)
