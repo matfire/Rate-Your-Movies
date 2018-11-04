@@ -9,6 +9,8 @@ class SearchResults extends React.Component {
 		return(
 			<div className="row">
 			{this.props.data.map((movie, index) => {
+				if (index > 10)
+					return
 				if (index % 7 === 0) {
 					return(
 						<React.Fragment>
