@@ -30,20 +30,27 @@ class DetailedView extends React.Component {
 	}
 
 	renderReviews = () => {
-		return(
-			this.state.reviews.map((r) => (
-				<React.Fragment>
-				<div className="row mt-3" key={r.id}>
-					<div className="col-sm-2">
-						<p>{r.author}</p>
-					</div>
-					<div className="col-sm-10">
-						<p>{r.content}</p>
-					</div>
+		const reviews = 	this.state.reviews.map((r) => (
+			<React.Fragment>
+			<div className="row mt-3" key={r.id}>
+				<div className="col-sm-2">
+					<p>{r.author}</p>
 				</div>
-				<hr></hr>
-				</React.Fragment>
-		)))
+				<div className="col-sm-10">
+					<p>{r.content}</p>
+				</div>
+			</div>
+			<hr></hr>
+			</React.Fragment>
+	))
+			if(reviews) {
+		return(
+			<React.Fragment>
+				<p style={{textAlign:"center"}}>Reviews</p>
+			<hr></hr>
+			{reviews}
+			</React.Fragment>
+		)}
 	}
 	renderProductors = () => {
 		if (this.state.details.production_companies) {

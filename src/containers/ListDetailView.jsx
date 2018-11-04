@@ -50,7 +50,9 @@ class ListDetailView extends React.Component {
 				return(
 					<div className="row mt-3" key={item.id}>
 						<div className="col-sm-4">
+						<a href={"/movies/" + item.id}>
 							<img src={"https://image.tmdb.org/t/p/w154" + item.poster_path} alt={item.title}/>
+						</a>
 							<div className="w-100">
 							<i className={heart_class} onClick={() => {this.handleFavorite(item.id)}}></i>
 							</div>

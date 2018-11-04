@@ -1,5 +1,5 @@
 import React from 'react'
-import {Jumbotron, Input, Button} from 'reactstrap'
+import {Jumbotron, Button} from 'reactstrap'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import MovieDetail from '../components/MovieDetail'
@@ -10,7 +10,7 @@ class SearchResults extends React.Component {
 			<div className="row">
 			{this.props.data.map((movie, index) => {
 				if (index > 10)
-					return
+					return null
 				if (index % 7 === 0) {
 					return(
 						<React.Fragment>
@@ -65,7 +65,7 @@ class HomeView extends React.Component {
 				<Jumbotron>
 					<div className="row">
 						<div className="col-sm-5">
-							<Input onChange={this.handleInputChange} placeholder="Start looking for a movie"/>
+							<input className="form-control" onChange={this.handleInputChange} placeholder="Start looking for a movie"/>
 						</div>
 						<div className="col-sm-1">
 							<p><strong>OR</strong></p>
