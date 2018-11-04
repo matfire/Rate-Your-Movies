@@ -7,12 +7,13 @@ import LoginView from './containers/LoginView'
 import PersonalLists from './containers/PersonalLists'
 import ListDetailView from './containers/ListDetailView'
 import FavoritesView from './containers/FavoritesView'
-
+import HomeView from './containers/HomeView'
 
 export default class BaseRouter extends React.Component {
 	render() {
 		return(
 						<div>
+							<Route exact path="/" component={HomeView} />
 							<Route exact path="/trending" component={Trending}/>
 							<Route exact path="/login" component={LoginView} />
 							<Switch>
