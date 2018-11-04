@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import { Card, CardImg, CardText, CardBody,
-	CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardImg, CardBody,
+	CardTitle, CardSubtitle } from 'reactstrap';
 class ListDetailView extends React.Component {
 	state = {
 		details: {},
@@ -12,7 +12,6 @@ class ListDetailView extends React.Component {
 			this.setState({
 				details: res.data
 			})
-			console.log(res.data)
 			this.state.details.items.map((item) => {
 				axios.get("https://api.themoviedb.org/3/movie/"+ item.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
 					const favorites = this.state.favorites
@@ -33,11 +32,6 @@ class ListDetailView extends React.Component {
 		})
 	}
 	handleFavorite = (id) => {
-		let data = {
-			media_type : "movie",
-			media_id: id,
-			favorite: !this.state.favorites[id]
-		}
 		axios.post("https://api.themoviedb.org/3/account/"+ localStorage.getItem("User").id +"/favorite?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), {
 			media_type : "movie",
 			media_id: id,
