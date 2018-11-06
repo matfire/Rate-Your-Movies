@@ -5,11 +5,11 @@ import {NotificationContainer} from 'react-notifications'
 class Layout extends React.Component {
 	render() {
 		return(
-			<div>
-				<NavBarComponent></NavBarComponent>
+			<React.Fragment>
+				<NavBarComponent />
 					<NotificationContainer/>
 					{this.props.children}
-			</div>
+			</React.Fragment>
 		)
 	}
 }

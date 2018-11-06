@@ -4,6 +4,11 @@ import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, NavLink } f
 
 import SearchBar from './SearchBar'
 
+
+
+
+
+
 class NavBarComponent extends React.Component {
 	state = {
 		isOpen:false	
@@ -16,45 +21,41 @@ class NavBarComponent extends React.Component {
 		const User = localStorage.getItem("User")
 		if (!session) {
 			return(
-				<NavItem>
-					<NavLink href="/login"><i className="fas fa-unlock-alt"></i>Login with TMDB</NavLink>
-				</NavItem>
+				<ul className="nav navbar-nav flex-child-menu menu-right">             
+					<li className="btn signupLink"><a href="/login"><i className="fas fa-unlock-alt"></i>Login with TMDB</a></li>
+				</ul>
 			)
 		}
 		return (
-			<React.Fragment>
-				<NavItem>
-					<NavLink href="/list"><i className="fas fa-clipboard-list"></i>Your lists</NavLink>
-				</NavItem>
-				<NavItem>
-					<NavLink href="/favorites"><i className="far fa-heart"></i>Your Favorites</NavLink>
-				</NavItem>
-				<NavItem>
-					<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash} height={30} alt={User.username}/>
-				</NavItem>
-			</React.Fragment>
+				<ul className="nav navbar-nav flex-child-menu menu-right">             
+						<li><a href="/list"><i className="fas fa-clipboard-list"></i>Your lists</a></li>
+						<li><a href="/favorites"><i className="far fa-heart"></i>Your Favorites</a></li>
+				</ul>
 		)
 	}
 	render() {
 		const options = this.renderLoggedInNavigation()
 		return(
-			<div>
-				<Navbar color="light" light expand="md">
-					<NavbarBrand href="/">Rate Your Movies</NavbarBrand>
-					<NavbarToggler onClick={this.toggle} />
-					<Collapse isOpen={this.state.isOpen} navbar>
-						<Nav className="ml-auto" navbar>
-							<NavItem>
-								<SearchBar />
-							</NavItem>
-							<NavItem>
-								<NavLink href="/trending"><i className="fas fa-trophy"></i> Trending</NavLink>
-							</NavItem>
+			<header className="ht-header">
+				<div className="container">
+					<nav className="navbar navbar-default navbar-custom">
+						<div className="navbar-header logo">
+				    		<div className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					    		<span className="sr-only">Toggle navigation</span>
+					    			<div id="nav-icon1">
+										<span></span>
+										<span></span>
+										<span></span>
+									</div>
+				    		</div>
+				    		<a href="/">Rate Your Movie</a>
+						</div>
+						<div className="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
 							{options}
-						</Nav>
-					</Collapse>
-				</Navbar>
-			</div>
+						</div>
+					</nav>
+				</div>
+			</header>
 		)
 	}
 }

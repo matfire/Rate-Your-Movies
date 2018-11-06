@@ -15,7 +15,7 @@ class MovieCasting extends React.Component {
   renderCast = () => {
     let cast = this.state.cast.map((member, index) => {
       if (index < 10) {
-        return(<MovieCastMember cast={member}/>)
+        return(<MovieCastMember cast={member} key={member.id}/>)
       }
     })
     return cast
