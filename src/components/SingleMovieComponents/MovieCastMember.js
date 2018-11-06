@@ -6,7 +6,7 @@ class MovieCastMember extends React.Component {
     return (
       <div className="cast-it">
         <MovieCastMemberImage data={this.props.cast}/>
-        <p>... {this.props.cast.name}</p>
+        <p>... {this.props.cast.character}</p>
       </div>
     );
   }
