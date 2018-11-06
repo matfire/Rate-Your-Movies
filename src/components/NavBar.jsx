@@ -1,18 +1,12 @@
 import React from 'react'
-import {
-	Collapse,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	Nav,
-	NavItem,
-	NavLink,} from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, NavLink } from 'reactstrap';
+
 
 import SearchBar from './SearchBar'
 
 class NavBarComponent extends React.Component {
 	state = {
-		isOpen:false
+		isOpen:false	
 	}
 	toggle = () => {
 		this.setState({isOpen: !this.state.isOpen})
@@ -36,7 +30,7 @@ class NavBarComponent extends React.Component {
 					<NavLink href="/favorites"><i className="far fa-heart"></i>Your Favorites</NavLink>
 				</NavItem>
 				<NavItem>
-					<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash} height={40} alt={User.username}/>
+					<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash} height={30} alt={User.username}/>
 				</NavItem>
 			</React.Fragment>
 		)

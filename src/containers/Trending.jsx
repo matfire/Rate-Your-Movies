@@ -28,7 +28,7 @@ class Trending extends React.Component {
 				{this.state.data.map((movie, index) => {
 					if (index % 7 === 0) {
 						return(
-							<React.Fragment>
+							<React.Fragment key={movie.id}>
 							<div className="w-100"></div>
 							<br></br>
 								<div className="col">
@@ -38,7 +38,7 @@ class Trending extends React.Component {
 						)
 					}
 					return(
-						<div className="col">
+						<div className="col" key={movie.id}>
 							<MovieDetail key={movie.id} id={movie.id} />
 						</div>)
 				})}

@@ -54,7 +54,7 @@ class MovieDetail extends React.Component {
 					<div>
 						<Card>
 							<a href={"/movies/" + this.props.id}>
-								<CardImg top width="100%" src={"https://image.tmdb.org/t/p/w154"+ this.state.details.poster_path}/>
+									<CardImg top width="100%" src={"https://image.tmdb.org/t/p/w154"+ this.state.details.poster_path}/>
 							</a>
 							<CardBody>
 								<CardTitle>{this.state.details.title}</CardTitle>
