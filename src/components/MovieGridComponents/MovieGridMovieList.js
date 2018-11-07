@@ -1,7 +1,6 @@
 import React from "react";
 import MovieGridMovieItem from "./MovieGridMovieItem";
-import axios from 'axios'
-import {NotificationManager} from 'react-notifications';
+
 
 
 class MovieGridMovieList extends React.Component {
