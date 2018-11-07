@@ -9,7 +9,8 @@ import axios from 'axios'
 class MovieDataDetail extends React.Component {
   state = {
     data : this.props.data,
-    activeTab: 1
+    activeTab: 1,
+    favorite: false
   }
 
   hadleChangeActiveTab = (id) => {
@@ -21,16 +22,23 @@ class MovieDataDetail extends React.Component {
       if (this.state.activeTab === id) {
         return(
         <li className="active">
-          <a href={"#" + name.toLowerCase()} onClick={() => {this.hadleChangeActiveTab(id)}}>{name}</a>
+          <a href={"javascript:void(0)"} onClick={() => {this.hadleChangeActiveTab(id)}}>{name}</a>
         </li>
         )
       }
       return(
         <li>
-          <a href={"#" + name.toLowerCase()} onClick={() => {this.hadleChangeActiveTab(id)}}>{name}</a>
+          <a href={"javascript:void(0)"} onClick={() => {this.hadleChangeActiveTab(id)}}>{name}</a>
         </li>
       )
 
+  }
+  handleFavorite = (id) => {
+    const data = {
+      type: "movie",
+      id,
+      favorite: !this.state.favorite
+    }
   }
   render() {
     let year = this.props.data.release_date
@@ -43,7 +51,7 @@ class MovieDataDetail extends React.Component {
             {this.props.data.title} <span>{year}</span>
           </h1>
           <div className="social-btn">
-            <a href="/" className="parent-btn">
+            <a href="#" className="parent-btn" onClick={() => this.handleFavorite(this.props.data.id)}>
               <i className="ion-heart" /> Add to Favorite
             </a>
             <div className="hover-bnt">

@@ -21,7 +21,7 @@ class DetailedView extends React.Component {
 	}
 	render() {
 		return(
-			<div>
+			<div className="buster-dark">
 				<MovieSinglePageHero poster={this.state.details.backdrop_path}/>
 				<MovieSinglePageDetail data={this.state.details}/>
 			</div>

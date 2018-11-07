@@ -28,8 +28,8 @@ class NavBarComponent extends React.Component {
 		}
 		return (
 				<ul className="nav navbar-nav flex-child-menu menu-right">             
-						<li><a href="/list"><i className="fas fa-clipboard-list"></i>Your lists</a></li>
-						<li><a href="/favorites"><i className="far fa-heart"></i>Your Favorites</a></li>
+						<li><a href="/list">Your lists</a></li>
+						<li><a href="/favorites">Your Favorites</a></li>
 				</ul>
 		)
 	}
