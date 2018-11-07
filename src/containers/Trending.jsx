@@ -1,13 +1,11 @@
 import React from 'react'
-import axios from 'axios'
-import MovieDetail from '../components/MovieDetail'
-import Loading from 'react-loading-bar'
+import MovieGridPage from '../components/MovieGridComponents/MovieGridPage'
 import 'react-loading-bar/dist/index.css'
+import axios from 'axios'
 import {NotificationManager} from 'react-notifications';
 class Trending extends React.Component {
 	state = {
 		data: [],
-		loading:true
 	}
 
 	componentDidMount() {
@@ -23,26 +21,7 @@ class Trending extends React.Component {
 	}
 	render() {
 		return(
-			<div className="row">
-				<Loading show={this.state.loading} color="green"/>
-				{this.state.data.map((movie, index) => {
-					if (index % 7 === 0) {
-						return(
-							<React.Fragment key={movie.id}>
-							<div className="w-100"></div>
-							<br></br>
-								<div className="col">
-									<MovieDetail key={movie.id} id={movie.id} />
-								</div>
-							</React.Fragment>
-						)
-					}
-					return(
-						<div className="col" key={movie.id}>
-							<MovieDetail key={movie.id} id={movie.id} />
-						</div>)
-				})}
-			</div>
+				<MovieGridPage data={this.state.data}/>
 		)
 	}
 }

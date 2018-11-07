@@ -5,11 +5,11 @@ class MovieGridMovieItemInfo extends React.Component {
     return (
       <div className="mv-item-infor">
         <h6>
-          <a href="#">oblivion</a>
+          <a href={"/movies/" + this.props.id}>{this.props.title}</a>
         </h6>
         <p className="rate">
           <i className="ion-android-star" />
-          <span>8.1</span> /10
+          <span>{this.props.rating}</span> /10
         </p>
       </div>
     );

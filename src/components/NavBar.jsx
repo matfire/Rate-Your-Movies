@@ -18,11 +18,10 @@ class NavBarComponent extends React.Component {
 	}
 	renderLoggedInNavigation = () => {
 		const session = localStorage.getItem("TMDB_session_id")
-		const User = localStorage.getItem("User")
 		if (!session) {
 			return(
 				<ul className="nav navbar-nav flex-child-menu menu-right">             
-					<li className="btn signupLink"><a href="/login"><i className="fas fa-unlock-alt"></i>Login with TMDB</a></li>
+					<li className="btn signupLink"><a href="/login">Login with TMDB</a></li>
 				</ul>
 			)
 		}
@@ -30,6 +29,7 @@ class NavBarComponent extends React.Component {
 				<ul className="nav navbar-nav flex-child-menu menu-right">             
 						<li><a href="/list">Your lists</a></li>
 						<li><a href="/favorites">Your Favorites</a></li>
+						<li><a href="/trending">Trending</a></li>
 				</ul>
 		)
 	}
