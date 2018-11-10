@@ -51,7 +51,7 @@ class MovieDataDetail extends React.Component {
             {this.props.data.title} <span>{year}</span>
           </h1>
           <div className="social-btn">
-            <a href="#" className="parent-btn" onClick={() => this.handleFavorite(this.props.data.id)}>
+            <a href="javascript:void(0)" className="parent-btn" onClick={() => this.handleFavorite(this.props.data.id)}>
               <i className="ion-heart" /> Add to Favorite
             </a>
             <div className="hover-bnt">

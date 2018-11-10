@@ -5,9 +5,8 @@ class MovieReviewInfoUser extends React.Component {
     return (
       <div className="user-infor">
         <div>
-          <h3>Best Marvel movie in my opinion</h3>
           <p className="time">
-            17 December 2016 by <a href="/"> hawaiipierson</a>
+            by <a href="/"> {this.props.author}</a>
           </p>
         </div>
       </div>

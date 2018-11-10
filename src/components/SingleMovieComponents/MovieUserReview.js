@@ -1,23 +1,24 @@
 import React from "react";
 import MovieReviewInfoUser from "./MovieReviewInfoUser";
+import axios from 'axios'
 
 class MovieUserReview extends React.Component {
+  state = {
+    data: {}
+  }
+  componentDidMount() {
+    axios.get("https://api.themoviedb.com/3/review/" + this.props.id + "&api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+        this.setState({data: res.data})
+        console.log(res.data)
+      }
+    )
+  }
   render() {
     return (
       <div className="mv-user-review-item">
-        <MovieReviewInfoUser />
+        <MovieReviewInfoUser author={this.state.data.author}/>
         <p>
-          This is by far one of my favorite movies from the MCU. The
-          introduction of new Characters both good and bad also makes the movie
-          more exciting. giving the characters more of a back story can also
-          help audiences relate more to different characters better, and it
-          connects a bond between the audience and actors or characters. Having
-          seen the movie three times does not bother me here as it is as
-          thrilling and exciting every time I am watching it. In other words,
-          the movie is by far better than previous movies (and I do love
-          everything Marvel), the plotting is splendid (they really do out do
-          themselves in each film, there are no problems watching it more than
-          once.
+          {this.state.data.content}
         </p>
       </div>
     );
