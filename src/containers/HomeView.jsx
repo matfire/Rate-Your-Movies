@@ -4,33 +4,9 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import MovieDetail from '../components/MovieDetail'
 
-class SearchResults extends React.Component {
-	render() {
-		return(
-			<div className="row">
-			{this.props.data.map((movie, index) => {
-				if (index > 10)
-					return null
-				if (index % 7 === 0) {
-					return(
-						<React.Fragment>
-						<div className="w-100"></div>
-						<br></br>
-							<div className="col">
-								<MovieDetail key={movie.id} id={movie.id} />
-							</div>
-						</React.Fragment>
-					)
-				}
-				return(
-					<div className="col">
-						<MovieDetail key={movie.id} id={movie.id} />
-					</div>)
-			})}
-		</div>
-		)
-	}
-}
+
+
+
 
 
 
@@ -61,22 +37,22 @@ class HomeView extends React.Component {
 	}
 	render() {
 		return(
-			<div className="mt-5">
-				<Jumbotron>
-					<div className="row">
-						<div className="col-sm-5">
-							<input className="form-control" onChange={this.handleInputChange} placeholder="Start looking for a movie"/>
-						</div>
-						<div className="col-sm-1">
-							<p><strong>OR</strong></p>
-						</div>
-						<div className="col-sm-6">
-						<Link to="/trending" style={{color: "inherit"}}><Button color="success"><i className="fas fa-trophy"></i>    Look at Trending Movies</Button></Link>
+			<React.Fragment>
+				<div className="slider movie-items">
+				</div>
+				<div className="movie-items">
+					<div className="container">
+						<div className="row ipad-width">
+							<div className="col-md-8">
+								<div className="title-hd">
+									<h2>IN THEATER</h2>
+								</div>
+							</div>
+							<div className="col-md-4"></div>
 						</div>
 					</div>
-					<SearchResults data={this.state.results} />
-				</Jumbotron>
-			</div>
+				</div>
+		</React.Fragment>
 		)
 	}
 }

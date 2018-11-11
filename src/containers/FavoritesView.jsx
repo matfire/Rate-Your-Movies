@@ -1,6 +1,7 @@
 import React from 'react'
 import {Table, Button} from 'reactstrap'
 import axios from 'axios'
+import MovieGridPage from '../components/MovieGridComponents/MovieGridPage'
 
 
 class FavoritesView extends React.Component {
@@ -51,21 +52,7 @@ class FavoritesView extends React.Component {
 	render() {
 		const rows = this.renderRow()
 		return(
-			<div className="row mt-5">
-				<Table>
-					<thead>
-						<tr>
-							<th>Poster</th>
-							<th>Title</th>
-							<th>Overview</th>
-							<th>Remove from Favorites</th>
-						</tr>
-					</thead>
-					<tbody>
-						{rows}
-					</tbody>
-				</Table>
-			</div>
+			<MovieGridPage data={this.state.results}/>
 		)
 	}
 }
