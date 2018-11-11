@@ -18,7 +18,7 @@ class MovieOverviewTabs extends React.Component {
     })
   }
   render() {
-    if (this.props.data.id !== undefined) {
+    if (this.props.data.id !== undefined && this.state.cast.length === 0) {
       this.getCast()
     }
     let tabClass = "tab"
@@ -45,10 +45,8 @@ class MovieOverviewTabs extends React.Component {
                 Full Cast & Crew <i className="ion-ios-arrow-right" />
               </a>
             </div>
-            {}
             <MovieCasting cast={this.state.cast}/>
             <MovieUserReviewsCallback />
-            {}
           </div>
           <MovieCrewList />
         </div>

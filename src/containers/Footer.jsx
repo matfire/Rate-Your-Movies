@@ -16,7 +16,7 @@ class Footer extends React.Component {
 						<div className="flex-child-ft item2">
 							<h4>Resources</h4>
 							<ul>
-								<li><a href="#">About</a></li> 
+								<li><a href="#">About</a></li>
 								<li><a href="#">Blockbuster</a></li>
 								<li><a href="#">Contact Us</a></li>
 								<li><a href="#">Forums</a></li>
@@ -27,16 +27,16 @@ class Footer extends React.Component {
 						<div className="flex-child-ft item3">
 							<h4>Legal</h4>
 							<ul>
-								<li><a href="#">Terms of Use</a></li> 
-								<li><a href="#">Privacy Policy</a></li>	
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Privacy Policy</a></li>
 								<li><a href="#">Security</a></li>
 							</ul>
 						</div>
 						<div className="flex-child-ft item4">
 							<h4>Account</h4>
 							<ul>
-								<li><a href="#">My Account</a></li> 
-								<li><a href="#">Watchlist</a></li>	
+								<li><a href="#">My Account</a></li>
+								<li><a href="#">Watchlist</a></li>
 								<li><a href="#">Collections</a></li>
 								<li><a href="#">User Guide</a></li>
 							</ul>
@@ -48,7 +48,7 @@ class Footer extends React.Component {
 						<p>© 2018 Matteo Gassend. All Rights Reserved. Designed by Matteo Gassend.<br></br>Powered by The Movie Database</p>
 					</div>
 				<div className="backtotop">
-					<p><a href="#" id="back-to-top">Back to top  <i className="ion-ios-arrow-thin-up"></i></a></p>
+					<p><a href="javascript:void(0)" id="back-to-top" onClick={() => {window.scrollTo(0,0)}}>Back to top  <i className="ion-ios-arrow-thin-up"></i></a></p>
 				</div>
 	</div>
 			</footer>

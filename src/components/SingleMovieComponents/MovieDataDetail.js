@@ -87,7 +87,7 @@ class MovieDataDetail extends React.Component {
               </ul>
               <div className="tab-content">
                 <MovieOverviewTabs data={this.props.data} active={this.state.activeTab === 1}/>
-                <MovieReviewsTab data={this.props.data} active={this.state.activeTab === 2}/>
+                <MovieReviewsTab data={this.props.data.reviews} title={this.props.data.title} active={this.state.activeTab === 2}/>
                 <MovieCastCrewTab data={this.props.data} active={this.state.activeTab === 3}/>
                 <MovieMediaTab data={this.props.data} active={this.state.activeTab === 4}/>
                 <MovieRelatedTab data={this.props.data} active={this.state.activeTab === 5}/>
