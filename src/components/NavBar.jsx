@@ -18,11 +18,11 @@ class NavBarComponent extends React.Component {
 		if (!session) {
 			return(
 				<React.Fragment>
-					<NavItem className="nav navbar-nav flex-child-menu menu-left">
-						<NavLink className="btn signupLink" href="/login">Login with TMDB</NavLink>
+					<NavItem >
+						<NavLink style={{paddingLeft:"20px"}} href="/login">Login with TMDB</NavLink>
 					</NavItem>
-					<NavItem>
-							<NavLink href="/favorites">Your Favorites</NavLink>
+					<NavItem >
+							<NavLink style={{paddingLeft:"20px"}} className="pl-3" href="/favorites">Your Favorites</NavLink>
 					</NavItem>
 			</React.Fragment>
 			)
@@ -30,13 +30,13 @@ class NavBarComponent extends React.Component {
 		return (
 			<React.Fragment>
 					<NavItem>
-							<NavLink href="/list">Your lists</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} href="/list">Your lists</NavLink>
 					</NavItem>
 					<NavItem>
-							<NavLink href="/favorites">Your Favorites</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} href="/favorites">Your Favorites</NavLink>
 					</NavItem>
 					<NavItem>
-							<NavLink href="/trending">Trending</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} href="/trending">Trending</NavLink>
 					</NavItem>
 			</React.Fragment>
 		)
