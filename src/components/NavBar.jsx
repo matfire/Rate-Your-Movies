@@ -17,9 +17,14 @@ class NavBarComponent extends React.Component {
 		const session = localStorage.getItem("TMDB_session_id")
 		if (!session) {
 			return(
-				<NavItem className="nav navbar-nav flex-child-menu menu-left">
-					<NavLink className="btn signupLink" href="/login">Login with TMDB</NavLink>
-				</NavItem>
+				<React.Fragment>
+					<NavItem className="nav navbar-nav flex-child-menu menu-left">
+						<NavLink className="btn signupLink" href="/login">Login with TMDB</NavLink>
+					</NavItem>
+					<NavItem>
+							<NavLink href="/favorites">Your Favorites</NavLink>
+					</NavItem>
+			</React.Fragment>
 			)
 		}
 		return (
