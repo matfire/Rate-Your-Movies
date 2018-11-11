@@ -3,6 +3,7 @@ import Layout from './containers/Layout'
 import axios from 'axios'
 import BaseRouter from './routes'
 import {BrowserRouter as Router} from 'react-router-dom'
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const AppContext = React.createContext();
 

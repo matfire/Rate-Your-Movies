@@ -9,6 +9,7 @@
     "nprogress": "^0.2.0",
     "proptypes": "^1.1.0",
     "react": "^16.6.0",
+    "react-alice-carousel": "^1.13.0",
     "react-dom": "^16.6.0",
     "react-epic-spinners": "^0.2.1",
     "react-loading-bar": "^0.0.7",
