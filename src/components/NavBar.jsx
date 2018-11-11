@@ -22,7 +22,7 @@ class NavBarComponent extends React.Component {
 						<NavLink style={{paddingLeft:"20px"}} href="/login">Login with TMDB</NavLink>
 					</NavItem>
 					<NavItem >
-							<NavLink style={{paddingLeft:"20px"}} className="pl-3" href="/favorites">Your Favorites</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} className="pl-3" href="/trending">Trending</NavLink>
 					</NavItem>
 			</React.Fragment>
 			)
