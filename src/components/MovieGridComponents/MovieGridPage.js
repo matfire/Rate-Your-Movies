@@ -9,7 +9,17 @@ class MovieGridPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        < MovieSinglePageHero />
+        <div class="hero common-hero">
+        	<div class="container">
+        		<div class="row">
+        			<div class="col-md-12">
+        				<div class="hero-ct">
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+
         <div className="page-single">
           <div className="container">
             <div className="row ipad-width">
