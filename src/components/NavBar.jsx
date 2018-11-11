@@ -1,9 +1,6 @@
 import React from 'react'
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, NavLink } from 'reactstrap';
-
-
 import SearchBar from './SearchBar'
-
 
 
 
@@ -11,7 +8,7 @@ import SearchBar from './SearchBar'
 
 class NavBarComponent extends React.Component {
 	state = {
-		isOpen:false	
+		isOpen:false
 	}
 	toggle = () => {
 		this.setState({isOpen: !this.state.isOpen})
@@ -20,17 +17,23 @@ class NavBarComponent extends React.Component {
 		const session = localStorage.getItem("TMDB_session_id")
 		if (!session) {
 			return(
-				<ul className="nav navbar-nav flex-child-menu menu-right">             
-					<li className="btn signupLink"><a href="/login">Login with TMDB</a></li>
-				</ul>
+				<NavItem className="nav navbar-nav flex-child-menu menu-left">
+					<NavLink className="btn signupLink" href="/login">Login with TMDB</NavLink>
+				</NavItem>
 			)
 		}
 		return (
-				<ul className="nav navbar-nav flex-child-menu menu-right">             
-						<li><a href="/list">Your lists</a></li>
-						<li><a href="/favorites">Your Favorites</a></li>
-						<li><a href="/trending">Trending</a></li>
-				</ul>
+			<React.Fragment>
+					<NavItem>
+							<NavLink href="/list">Your lists</NavLink>
+					</NavItem>
+					<NavItem>
+							<NavLink href="/favorites">Your Favorites</NavLink>
+					</NavItem>
+					<NavItem>
+							<NavLink href="/trending">Trending</NavLink>
+					</NavItem>
+			</React.Fragment>
 		)
 	}
 	render() {
@@ -38,22 +41,18 @@ class NavBarComponent extends React.Component {
 		return(
 			<header className="ht-header">
 				<div className="container">
-					<nav className="navbar navbar-default navbar-custom">
-						<div className="navbar-header logo">
-				    		<div className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					    		<span className="sr-only">Toggle navigation</span>
-					    			<div id="nav-icon1">
-										<span></span>
-										<span></span>
-										<span></span>
-									</div>
-				    		</div>
-				    		<a href="/">Rate Your Movie</a>
-						</div>
-						<div className="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+					<Navbar className="navbar navbar-default navbar-custom" expand="md">
+						<NavbarBrand className="navbar-header logo" href="/">
+				    		Rate Your Movie
+						</NavbarBrand>
+						<NavbarToggler onClick={this.toggle} className="navbar-toggle"></NavbarToggler>
+						<Collapse isOpen={this.state.isOpen} navbar>
+						<Nav className="collapse navbar-collapse flex-parent ml-auto" navbar>
 							{options}
-						</div>
-					</nav>
+
+						</Nav>
+						</Collapse>
+					</Navbar>
 				</div>
 			</header>
 		)
