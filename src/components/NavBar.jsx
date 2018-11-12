@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, NavLink } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, FormInline, Dropdown, DropdownToggle, DropdownMenu,  DropdownItem } from "mdbreact";
 import SearchBar from './SearchBar'
 
 
@@ -19,10 +19,10 @@ class NavBarComponent extends React.Component {
 			return(
 				<React.Fragment>
 					<NavItem >
-						<NavLink style={{paddingLeft:"20px"}} href="/login">Login with TMDB</NavLink>
+						<NavLink style={{paddingLeft:"20px"}} to="/login">Login with TMDB</NavLink>
 					</NavItem>
 					<NavItem >
-							<NavLink style={{paddingLeft:"20px"}} className="pl-3" href="/trending">Trending</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} className="pl-3" to="/trending">Trending</NavLink>
 					</NavItem>
 			</React.Fragment>
 			)
@@ -30,13 +30,13 @@ class NavBarComponent extends React.Component {
 		return (
 			<React.Fragment>
 					<NavItem>
-							<NavLink style={{paddingLeft:"20px"}} href="/list">Your lists</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} to="/list">Your lists</NavLink>
 					</NavItem>
 					<NavItem>
-							<NavLink style={{paddingLeft:"20px"}} href="/favorites">Your Favorites</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} to="/favorites">Your Favorites</NavLink>
 					</NavItem>
 					<NavItem>
-							<NavLink style={{paddingLeft:"20px"}} href="/trending">Trending</NavLink>
+							<NavLink style={{paddingLeft:"20px"}} to="/trending">Trending</NavLink>
 					</NavItem>
 			</React.Fragment>
 		)
@@ -44,22 +44,17 @@ class NavBarComponent extends React.Component {
 	render() {
 		const options = this.renderLoggedInNavigation()
 		return(
-			<header className="ht-header">
-				<div className="container">
-					<Navbar className="navbar navbar-default navbar-custom" expand="md">
-						<NavbarBrand className="navbar-header logo" href="/">
+					<Navbar color="blue" dark expand="md" id="top-section">
+						<NavbarBrand>
 				    		Rate Your Movie
 						</NavbarBrand>
-						<NavbarToggler onClick={this.toggle} className="navbar-toggle"></NavbarToggler>
+						<NavbarToggler onClick={this.toggle}></NavbarToggler>
 						<Collapse isOpen={this.state.isOpen} navbar>
-						<Nav className="collapse navbar-collapse flex-parent ml-auto" navbar>
+						<NavbarNav left>
 							{options}
-
-						</Nav>
+						</NavbarNav>
 						</Collapse>
 					</Navbar>
-				</div>
-			</header>
 		)
 	}
 }

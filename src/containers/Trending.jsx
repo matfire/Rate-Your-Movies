@@ -1,11 +1,14 @@
 import React from 'react'
-import MovieGridPage from '../components/MovieGridComponents/MovieGridPage'
 import 'react-loading-bar/dist/index.css'
 import axios from 'axios'
 import {NotificationManager} from 'react-notifications';
+import {CardGroup} from 'mdbreact'
+import MovieCard from '../components/MovieCard'
+import {LoopingRhombusesSpinner} from 'react-epic-spinners'
 class Trending extends React.Component {
 	state = {
 		data: [],
+		loading:true
 	}
 
 	componentDidMount() {
@@ -20,8 +23,21 @@ class Trending extends React.Component {
 		})
 	}
 	render() {
+		if (this.state.loading) {
+			return(
+				<LoopingRhombusesSpinner />
+			)
+		}
 		return(
-				<MovieGridPage data={this.state.data}/>
+			<div className="row mt-5 d-flex justify-content-center">
+				{this.state.data.map((movie) => (
+							<div className="col-md-3" key={movie.id}>
+								<MovieCard data={movie} />
+							</div>
+						)
+					)
+				}
+			</div>
 		)
 	}
 }

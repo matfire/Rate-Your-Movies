@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import MovieGridMovieItemLink from "./MovieGridComponents/MovieGridMovieItemLink";
-import MovieGridMovieItemInfo from "./MovieGridComponents/MovieGridMovieItemInfo";
+
 
 class MovieDetail extends React.Component {
 	state = {
@@ -18,8 +17,6 @@ class MovieDetail extends React.Component {
 		return(
 					<div>
 						<img src={"https://image.tmdb.org/t/p/w342" + this.state.details.poster_path} alt={this.state.title} />
-        				<MovieGridMovieItemLink />
-        				<MovieGridMovieItemInfo id={this.props.id} title={this.props.title} rating={this.props.vote_average}/>
 					</div>
 			)
 	}
