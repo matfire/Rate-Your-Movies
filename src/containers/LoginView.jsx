@@ -29,7 +29,7 @@ class LoginView extends React.Component {
 							iso_639_1: res.data.iso_639_1,
 							iso_3166_1: res.data.iso_3166_1
 						}
-						localStorage.setItem("User", User)
+						localStorage.setItem("User", JSON.stringify(User))
 					})
 				})
 			}

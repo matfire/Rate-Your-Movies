@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {Nav, Row, Col, Fa } from 'mdbreact';
+import {Nav, Row, Col, Fa, Far } from 'mdbreact';
 import {TabPane, TabContent, NavItem, NavLink} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem } from 'mdbreact'
@@ -46,6 +46,7 @@ class SimilarTab extends React.Component {
 class DetailedView extends React.Component {
 	state = {
 		details: [],
+		states: {},
 		activeItem: 1,
 		trailerModal: false,
 		rating: 0
@@ -56,6 +57,13 @@ class DetailedView extends React.Component {
 				details:res.data
 			})
 		})
+		this.getStates()
+	}
+	getStates = () => {
+		let session = localStorage.getItem("TMDB_session_id")
+		if (session){
+			axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {this.setState({states: res.data})})
+		}
 	}
 	toggleModal = () => {
 		this.setState({
@@ -75,11 +83,32 @@ class DetailedView extends React.Component {
 			}
 		}
 	}
+	toggleFavorite = () => {
+		const User = JSON.parse(localStorage.getItem("User"))
+		let data = {
+			media_type:"movie",
+			media_id: this.state.details.id,
+			favorite: !this.state.states.favorite
+		}
+		console.log(User)
+		axios.get("https://api.themoviedb.org/3/account/" + User.id + "/favorite?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), data).then(this.getStates())
+	}
+	checkFavorite = () => {
+		let session = localStorage.getItem("TMDB_session_id")
+		if (!session){
+			return
+		}
+		if(this.state.states.favorite === false) {
+			return(<i className="far fa-heart" onClick={this.toggleFavorite}/>)
+		}
+		return(<i className="fa fa-heart" onClick={this.toggleFavorite}/>)
+	}
 	render() {
 		if (this.state.details.length === 0) {
 			this.getData()
 		}
 		let year = this.state.details.release_date
+		let favorite_icon = this.checkFavorite()
 		let trailerUrl = ""
 		if(year) {
 		  year = year.substring(0, 4)
@@ -110,7 +139,7 @@ class DetailedView extends React.Component {
 				<div className="col-md-8">
 					<div className="row">
 						<div className="col-md-12">
-							<h3><strong>{this.state.details.title}</strong>		{year}</h3>
+						{favorite_icon}	<h3><strong>{this.state.details.title}</strong>		{year}</h3>
 						</div>
 						<div className="col-md-4">
 							<Fa icon="star" style={{color:"#f5b50a"}} /> {this.state.details.vote_average}/10
