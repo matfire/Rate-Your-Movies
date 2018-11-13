@@ -1,11 +1,12 @@
 import React from 'react'
 import axios from 'axios'
-import {Nav, Row, Col, Container } from 'mdbreact';
+import {Nav, Row, Col, Fa } from 'mdbreact';
 import {TabPane, TabContent, NavItem, NavLink} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import StickyBox from "react-sticky-box";
-import { Button, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
+import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
+import StarRatingComponent from 'react-star-rating-component';
 
 class SimilarTab extends React.Component {
 	getSimilars = () => {
@@ -45,13 +46,20 @@ class SimilarTab extends React.Component {
 class DetailedView extends React.Component {
 	state = {
 		details: [],
-		activeItem: 1
+		activeItem: 1,
+		trailerModal: false,
+		rating: 0
 	}
 	getData = () => {
-		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&append_to_response=credits,videos,images,similar,reviews,account_states").then(res => {
+		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&append_to_response=credits,videos,images,similar,reviews").then(res => {
 			this.setState({
 				details:res.data
 			})
+		})
+	}
+	toggleModal = () => {
+		this.setState({
+			trailerModal: !this.state.trailerModal
 		})
 	}
 	changeTab = (tab) => {
@@ -59,23 +67,60 @@ class DetailedView extends React.Component {
 			this.setState({activeItem: tab})
 		}
 	}
+	getTrailerUrl = () => {
+		if(this.state.details.videos) {
+			for(let i = 0; i < this.state.details.videos.results.length; i++) {
+				if (this.state.details.videos.results[i].type === "Trailer" && this.state.details.videos.results[i].size >= 480)
+					return("https://www.youtube.com/embed/" + this.state.details.videos.results[i].key)
+			}
+		}
+	}
 	render() {
 		if (this.state.details.length === 0) {
 			this.getData()
 		}
+		let year = this.state.details.release_date
+		let trailerUrl = ""
+		if(year) {
+		  year = year.substring(0, 4)
+		  trailerUrl = this.getTrailerUrl()
+		  console.log(trailerUrl)
+		}
 		return(
-			<div className="row">
+			<div className="row mt-5">
+				<Modal isOpen={this.state.trailerModal} toggle={() => this.toggleModal()} centered size="lg">
+					<ModalHeader toggle={() => this.toggleModal()}>Trailer for {this.state.details.title}</ModalHeader>
+					<ModalBody>
+						<Iframe src={trailerUrl} />
+					</ModalBody>
+					<ModalFooter>
+						<Button color="danger" outline onClick={() => this.toggleModal()}>Close</Button>
+					</ModalFooter>
+				</Modal>
 				<div className="col-md-4">
 					<StickyBox offsetTop={100} offsetBottom={20}>
 						<Card cascade>
 							<CardImage className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + this.state.details.poster_path} alt={this.state.details.title} href={"/movies/" + this.props.match.params.id}/>
 							<CardBody>
-								<Button style={{}} color="danger" outline>Watch Trailer</Button>
+								<Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>
 							</CardBody>
 						</Card>
 					</StickyBox>
 				</div>
 				<div className="col-md-8">
+					<div className="row">
+						<div className="col-md-12">
+							<h3><strong>{this.state.details.title}</strong>		{year}</h3>
+						</div>
+						<div className="col-md-4">
+							<Fa icon="star" style={{color:"#f5b50a"}} /> {this.state.details.vote_average}/10
+						</div>
+						<div className="col-md-8">
+							<StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating}/>
+						</div>
+						<hr></hr>
+					</div>
+
 							<Nav tabs>
 								<NavItem>
 									<NavLink className={classnames({active: this.state.activeItem === 1})} onClick={() => this.changeTab(1)}>Overview</NavLink>

@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBarComponent from '../components/NavBar'
 import {NotificationContainer} from 'react-notifications'
+import {Button} from 'mdbreact'
 import Footer from './Footer'
 class Layout extends React.Component {
 	render() {
@@ -10,7 +11,6 @@ class Layout extends React.Component {
 				<NotificationContainer/>
 				<div className="container">
 					{this.props.children}
-
 				</div>
 				<Footer />
 			</div>
