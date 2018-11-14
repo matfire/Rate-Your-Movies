@@ -1,31 +1,34 @@
 import React from 'react'
 import axios from 'axios'
-import {Nav, Row, Col, Fa, Far } from 'mdbreact';
+import {Nav, Row, Col, Fa} from 'mdbreact';
 import {TabPane, TabContent, NavItem, NavLink} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import StickyBox from "react-sticky-box";
 import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
+import Truncate from 'react-truncate';
 
 class SimilarTab extends React.Component {
 	getSimilars = () => {
 		if (this.props.data) {
 		const result = this.props.data.results.map((movie, index) => {
 			if (index < 4) {
+				let year = movie.release_date.substring(0,4)
 			return(
 			<ListGroupItem key={movie.id}>
 			<div className="row">
-				<div className="col-md-6">
+				<div className="col-md-4">
 					<a href={"/movies/" + movie.id}>
 						<img className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + movie.poster_path} alt={movie.title} />
 					</a>
 				</div>
 
-				<div className="col-md-6">
-					<h4>{movie.title}</h4>
+				<div className="col-md-8">
+					<h4>{movie.title}({year})</h4>
+					<Fa icon="star" style={{color:"#f5b50a"}} /> {movie.vote_average}/10<br></br>
+					<Truncate lines={3}>{movie.overview}</Truncate>
 					<hr></hr>
-					<p>{movie.overview}</p>
 				</div>
 			</div>
 			</ListGroupItem>
@@ -140,12 +143,13 @@ class DetailedView extends React.Component {
 				<div className="col-md-8">
 					<div className="row">
 						<div className="col-md-12">
-							<h3><strong>{this.state.details.title}</strong>		{year}</h3>
+							<h3><strong>{this.state.details.title}</strong>		<small>{year}</small></h3>
 						</div>
-						<div className="col-md-4">
-							<Fa icon="star" style={{color:"#f5b50a"}} /> {this.state.details.vote_average}/10
+						<br></br>
+						<div className="col-md-2 mt-2">
+							<p> <Fa icon="star" style={{color:"#f5b50a"}} size="2x"/>{this.state.details.vote_average}/10</p>
 						</div>
-						<div className="col-md-8">
+						<div className="col-md-8" style={{fontSize:"32px"}}>
 							<StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating}/>
 						</div>
 						<hr></hr>

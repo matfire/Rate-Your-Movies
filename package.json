@@ -19,6 +19,8 @@
     "react-scroll-up-button": "^1.6.4",
     "react-star-rating-component": "^1.4.1",
     "react-sticky-box": "^0.7.5",
+    "react-text-truncate": "^0.13.1",
+    "react-truncate": "^2.4.0",
     "reactstrap": "^6.5.0"
   },
   "scripts": {
