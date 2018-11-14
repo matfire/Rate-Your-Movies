@@ -12,7 +12,7 @@ class SimilarTab extends React.Component {
 	getSimilars = () => {
 		if (this.props.data) {
 		const result = this.props.data.results.map((movie, index) => {
-			if (index < 10) {
+			if (index < 4) {
 			return(
 			<ListGroupItem key={movie.id}>
 			<div className="row">
@@ -90,8 +90,9 @@ class DetailedView extends React.Component {
 			media_id: this.state.details.id,
 			favorite: !this.state.states.favorite
 		}
-		console.log(User)
-		axios.get("https://api.themoviedb.org/3/account/" + User.id + "/favorite?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), data).then(this.getStates())
+		axios.post("https://api.themoviedb.org/3/account/" + User.id + "/favorite?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), data).then(res => {
+			this.getStates()
+		})
 	}
 	checkFavorite = () => {
 		let session = localStorage.getItem("TMDB_session_id")
@@ -99,9 +100,9 @@ class DetailedView extends React.Component {
 			return
 		}
 		if(this.state.states.favorite === false) {
-			return(<i className="far fa-heart" onClick={this.toggleFavorite}/>)
+			return("far fa-heart")
 		}
-		return(<i className="fa fa-heart" onClick={this.toggleFavorite}/>)
+		return("fa fa-heart")
 	}
 	render() {
 		if (this.state.details.length === 0) {
@@ -113,7 +114,6 @@ class DetailedView extends React.Component {
 		if(year) {
 		  year = year.substring(0, 4)
 		  trailerUrl = this.getTrailerUrl()
-		  console.log(trailerUrl)
 		}
 		return(
 			<div className="row mt-5">
@@ -131,6 +131,7 @@ class DetailedView extends React.Component {
 						<Card cascade>
 							<CardImage className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + this.state.details.poster_path} alt={this.state.details.title} href={"/movies/" + this.props.match.params.id}/>
 							<CardBody>
+								<i className={favorite_icon} onClick={this.toggleFavorite} />
 								<Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>
 							</CardBody>
 						</Card>
@@ -139,7 +140,7 @@ class DetailedView extends React.Component {
 				<div className="col-md-8">
 					<div className="row">
 						<div className="col-md-12">
-						{favorite_icon}	<h3><strong>{this.state.details.title}</strong>		{year}</h3>
+							<h3><strong>{this.state.details.title}</strong>		{year}</h3>
 						</div>
 						<div className="col-md-4">
 							<Fa icon="star" style={{color:"#f5b50a"}} /> {this.state.details.vote_average}/10
