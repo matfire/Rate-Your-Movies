@@ -2,7 +2,7 @@ import React from 'react'
 import {Table, Button} from 'reactstrap'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-
+import MovieCard from '../components/MovieCard'
 class FavoritesView extends React.Component {
 
 	state = {
@@ -38,19 +38,6 @@ class FavoritesView extends React.Component {
 			favorite: false
 		}).then((res) => {this.getFavorites()})
 	}
-	renderRow = () => {
-		if (this.state.results) {
-			let results = this.state.results.map((item) => (
-				<tr key={item.id}>
-					<th><a href={"/movies/" + item.id}><img src={"https://image.tmdb.org/t/p/w154"+ item.poster_path} alt={item.title} /></a></th>
-					<th>{item.title}</th>
-					<th>{item.overview}</th>
-					<th><Button color="danger" onClick={() => {this.removeFavorite(item.id)}}>Remove from Favorites</Button></th>
-				</tr>
-			))
-			return results
-		}
-	}
 	render() {
 		let session = localStorage.getItem("TMDB_session_id")
 		if (!session) {
@@ -58,10 +45,21 @@ class FavoritesView extends React.Component {
 				<Redirect to="/" />
 			)
 		}
-		const rows = this.renderRow()
 		return(
-			<div>
-				{rows}
+			<div className="row mt-5">
+				<div className="col-md-12" style={{textAlign:"center"}}>
+					<h3>Your Favorite movies</h3>
+				</div>
+				<div className="col-md-12 mt-2">
+					<div style={{display:"flex", justifyContent:"flex-start", flexWrap:"wrap", alignItems:"inherit", marginRight:"-30px"}}>
+						{this.state.results.map((movie) => (
+							<div className="col-md-3" key={movie.id} >
+								<MovieCard data={movie}/>
+							</div>
+						))
+						}
+					</div>
+				</div>
 			</div>
 		)
 	}

@@ -8,7 +8,7 @@ import StickyBox from "react-sticky-box";
 import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
-
+import {AtomSpinner} from 'react-epic-spinners'
 class SimilarTab extends React.Component {
 	getSimilars = () => {
 		if (this.props.data) {
@@ -55,7 +55,8 @@ class DetailedView extends React.Component {
 		states: {},
 		activeItem: 1,
 		trailerModal: false,
-		rating: 0
+		rating: 0,
+		loading:true,
 	}
 	getData = () => {
 		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&append_to_response=credits,videos,images,similar,reviews").then(res => {
@@ -63,6 +64,9 @@ class DetailedView extends React.Component {
 				details:res.data
 			})
 		})
+		if (this.state.loading) {
+			this.setState({loading:false})
+		}
 		this.getStates()
 	}
 	getStates = () => {
@@ -133,6 +137,15 @@ class DetailedView extends React.Component {
 		if(year) {
 		  year = year.substring(0, 4)
 		  trailerUrl = this.getTrailerUrl()
+		}
+		if (this.state.loading === true) {
+			return(
+				<div className="row mt-5">
+					<div className="col-md-12" style={{textAlign:"center"}}>
+						<AtomSpinner color="blue" />
+					</div>
+				</div>
+			)
 		}
 		return(
 			<div className="row mt-5">
