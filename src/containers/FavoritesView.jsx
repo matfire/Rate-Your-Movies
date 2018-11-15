@@ -1,7 +1,7 @@
 import React from 'react'
 import {Table, Button} from 'reactstrap'
 import axios from 'axios'
-
+import {Redirect} from 'react-router-dom'
 
 class FavoritesView extends React.Component {
 
@@ -11,6 +11,8 @@ class FavoritesView extends React.Component {
 		totalPages:1
 	}
 	componentDidMount() {
+		let session = localStorage.getItem("TMDB_session_id")
+		if (session) {
 		axios.get("https://api.themoviedb.org/3/account/"+ localStorage.getItem("User").id +"/favorite/movies?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id") + "&language=en-US&sort_by=created_at.asc&page=1").then(res => {
 			this.setState({
 				results: res.data.results,
@@ -18,6 +20,7 @@ class FavoritesView extends React.Component {
 				totalPages: res.data.total_pages
 			})
 		})
+	}
 	}
 	getFavorites = () => {
 		axios.get("https://api.themoviedb.org/3/account/"+ localStorage.getItem("User").id +"/favorite/movies?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id") + "&language=en-US&sort_by=created_at.asc&page=1").then(res => {
@@ -49,6 +52,12 @@ class FavoritesView extends React.Component {
 		}
 	}
 	render() {
+		let session = localStorage.getItem("TMDB_session_id")
+		if (!session) {
+			return(
+				<Redirect to="/" />
+			)
+		}
 		const rows = this.renderRow()
 		return(
 			<div>

@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import {Table} from 'reactstrap'
-
+import {Redirect} from 'react-router-dom'
+import { insertGlobal } from 'glamor';
 class PersonalLists extends React.Component {
 	state = {
 		lists: [],
@@ -11,13 +12,20 @@ class PersonalLists extends React.Component {
 	
 	componentDidMount() {
 		const User = localStorage.getItem("User")
+		const session = localStorage.getItem("TMDB_session_id")
+		if (session) {
 		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
 			this.setState({
 				lists:res.data.results
 			})
 		}).catch(err => {console.log(err)})
 	}
+	}
 	render() {
+		const session = localStorage.getItem("TMDB_session_id")
+		if (!session) {
+			return(<Redirect to="/" />)
+		}
 		return(
 			<div className="mt-5">
 				<Table>
