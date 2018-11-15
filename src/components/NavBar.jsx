@@ -46,7 +46,7 @@ class NavBarComponent extends React.Component {
 		return(
 					<Navbar color="blue" dark expand="md" id="top-section">
 						<NavbarBrand>
-				    		Rate Your Movie
+				    		<a href="/" style={{color:"inherit"}}>Rate Your Movie</a>
 						</NavbarBrand>
 						<NavbarToggler onClick={this.toggle}></NavbarToggler>
 						<Collapse isOpen={this.state.isOpen} navbar>

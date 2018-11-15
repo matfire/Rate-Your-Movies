@@ -1,48 +1,79 @@
 import React from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
+import {Input, Button } from 'mdbreact';
+
 class LoginView extends React.Component {
 
 	state = {
-		request_token : ""
+		username: '',
+		password: '',
+		logged_in: false
 	}
 
 	componentDidMount() {
-		const token = localStorage.getItem('request_token')
-		if (!token) {
-			axios.get("https://api.themoviedb.org/3/authentication/token/new?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
-				this.setState({
-					request_token: res.data.request_token
-				})
-				localStorage.setItem('request_token', this.state.request_token)
-				window.location = "https://www.themoviedb.org/authenticate/" + this.state.request_token// + "&redirect_to=http://127.0.0.1:3000/login"
-			})} else {
-				axios.get("https://api.themoviedb.org/3/authentication/session/new?api_key=2005b3a7fc676c3bd69383469a281eff&request_token=" + token).then(res => {
+		let session = localStorage.getItem("TMDB_session_id")
+		if(session){
+			this.setState({logged_in:true})
+		}
+	}
+
+	handlePasswordChange = (e) => {
+		this.setState({password: e.target.value})
+	}
+	handleUsernameChange = (e) => {
+		this.setState({username: e.target.value})
+	}
+	requestLoginConfirmation = (event) => {
+		event.preventDefault()
+		axios.get("https://api.themoviedb.org/3/authentication/token/new?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+			let token = res.data.request_token;
+			console.log(token)
+			let user_data = {
+				username: this.state.username,
+				password: this.state.password,
+				request_token: token
+			}
+			axios.post("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=2005b3a7fc676c3bd69383469a281eff", user_data).then(res => {
+				console.log(res)
+				axios.post("https://api.themoviedb.org/3/authentication/session/new?api_key=2005b3a7fc676c3bd69383469a281eff", {request_token:res.data.request_token}).then(res => {
 					console.log(res.data)
 					localStorage.setItem("TMDB_session_id", res.data.session_id)
-					localStorage.removeItem("request_token")
-					axios.get("https://api.themoviedb.org/3/account?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
-						const User = {
-							username: res.data.username,
+					axios.get("https://api.themoviedb.org/3/account?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + res.data.session_id).then(res => {
+						let user = {
 							id: res.data.id,
-							gravatar_hash: res.data.avatar.gravatar.hash,
-							iso_639_1: res.data.iso_639_1,
-							iso_3166_1: res.data.iso_3166_1
+							name: res.data.name,
+							username: res.data.username,
+							gravatar_hash: res.data.avatar.gravatar.hash
 						}
-						localStorage.setItem("User", JSON.stringify(User))
+						localStorage.setItem("User", JSON.stringify(user))
+						this.setState({logged_in:true})
 					})
 				})
-			}
+			})
+		})
 	}
 	render() {
-		const session_id = localStorage.getItem("TMDB_session_id")
-		if (session_id) {
+		if (this.state.logged_in) {
 			return(
 				<Redirect to="/" />
 			)
 		}
 		return(
-			<p>This page will redirect you to TMDB's access page {session_id}</p>
+			<div className="row mt-5">
+        		<div className="md-12">
+            		<form onSubmit={this.requestLoginConfirmation}>
+              			<p className="h5 text-center mb-4">Login with your TMDB(The Movie Database) Credentials</p>
+						<div className="grey-text">
+							<Input label="Enter your TMDB account username" icon="user" group type="text" validate error="wrong" success="right" onChange={this.handleUsernameChange} required/>
+							<Input label="Type your password" icon="lock" group type="password" validate onChange={this.handlePasswordChange} required/>
+						</div>
+						<div className="text-center">
+							<Button type="submit">Login</Button>
+						</div>
+           			</form>
+          		</div>
+        	</div>
 		)
 	}
 }
