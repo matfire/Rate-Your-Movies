@@ -12,6 +12,9 @@ import Truncate from 'react-truncate';
 class SimilarTab extends React.Component {
 	getSimilars = () => {
 		if (this.props.data) {
+			if (this.props.data.total_results === 0) {
+				return(<p>Sorry, no related movies were found</p>)
+			}
 		const result = this.props.data.results.map((movie, index) => {
 			if (index < 4) {
 				let year = movie.release_date.substring(0,4)
@@ -163,7 +166,7 @@ class DetailedView extends React.Component {
 							<p> <Fa icon="star" style={{color:"#f5b50a"}} size="2x"/>{this.state.details.vote_average}/10</p>
 						</div>
 						<div className="col-md-8" style={{fontSize:"32px"}}>
-							<StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating} onStarClick={this.handleRatingChange}/>
+							{localStorage.getItem("TMDB_session_id") && <StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating} onStarClick={this.handleRatingChange}/>}
 						</div>
 						<hr></hr>
 					</div>
