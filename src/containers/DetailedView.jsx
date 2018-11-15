@@ -65,7 +65,12 @@ class DetailedView extends React.Component {
 	getStates = () => {
 		let session = localStorage.getItem("TMDB_session_id")
 		if (session){
-			axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {this.setState({states: res.data})})
+			axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
+				this.setState({states: res.data})
+				if(this.state.states.rated) {
+					this.setState({rating: this.state.states.rated["value"]})
+				}
+			})
 		}
 	}
 	toggleModal = () => {
@@ -106,6 +111,14 @@ class DetailedView extends React.Component {
 			return("far fa-heart")
 		}
 		return("fa fa-heart")
+	}
+	handleRatingChange = (nextValue, prevValue, name) => {
+		axios.post("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/rating?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), {
+			value: nextValue
+		}).then(res => {
+				this.getStates()
+				this.setState({rating: nextValue})
+			})
 	}
 	render() {
 		if (this.state.details.length === 0) {
@@ -150,7 +163,7 @@ class DetailedView extends React.Component {
 							<p> <Fa icon="star" style={{color:"#f5b50a"}} size="2x"/>{this.state.details.vote_average}/10</p>
 						</div>
 						<div className="col-md-8" style={{fontSize:"32px"}}>
-							<StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating}/>
+							<StarRatingComponent name="MovieRating" starCount={10} value={this.state.rating} onStarClick={this.handleRatingChange}/>
 						</div>
 						<hr></hr>
 					</div>
