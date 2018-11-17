@@ -67,7 +67,7 @@ class HomeView extends React.Component {
 		const PlayingMovieSliderItems = this.createPlayingMovieSliderComponents(this.state.movie_playing)
 		return(
 			<React.Fragment>
-				<div className="slider movie-items">
+				<div className="slider movie-items mt-5">
 					<div className="container">
 						<AliceCarousel items={TrendingMovieSliderItems} duration={1000} responsive={{0:{items:1}, 1024:{items:3}}} autoPlay={true} buttonsDisabled={true} mouseDragEnabled stagePadding={{paddingLeft:0, paddingRight:0}}/>
 					</div>
@@ -77,15 +77,9 @@ class HomeView extends React.Component {
 						<div className="row ipad-width">
 							<div className="col-md-8">
 								<div className="title-hd"><h2>IN THEATERS NOW</h2></div>
-								<div className="tabs">
-									<div className="tab-content">
-										<div className="tab-active">
 											<div className="row">
 												<AliceCarousel items={PlayingMovieSliderItems} autoPlay={false} buttonsDisabled={true} mouseDragEnabled responsive={{0:{items:1}, 1024:{items:4}}} />
 											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 							<div className="col-md-4"></div>
 						</div>

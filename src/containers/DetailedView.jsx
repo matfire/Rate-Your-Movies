@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Nav, Row, Col, Fa} from 'mdbreact';
-import {TabPane, TabContent, NavItem, NavLink} from 'reactstrap'
+import {TabPane, TabContent, NavItem, NavLink, Input} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import StickyBox from "react-sticky-box";
@@ -9,6 +9,8 @@ import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeade
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
 import {AtomSpinner} from 'react-epic-spinners'
+import { NotificationManager } from 'react-notifications';
+
 class SimilarTab extends React.Component {
 	getSimilars = () => {
 		if (this.props.data) {
@@ -55,18 +57,31 @@ class DetailedView extends React.Component {
 		states: {},
 		activeItem: 1,
 		trailerModal: false,
+		listModal: false,
+		listSelectedId: "",
+		listItems: [],
 		rating: 0,
 		loading:true,
+	}
+	getLists = () => {
+		let User = JSON.parse(localStorage.getItem("User"))
+		let session = localStorage.getItem("TMDB_session_id")
+		if (session && User) {
+			axios.get("https://api.themoviedb.org/3/account/" + User.id + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&session_id="+ session +"&language=en-US&page=1").then(res => {
+				this.setState({
+					listItems: res.data.results
+				})
+			})
+		}
 	}
 	getData = () => {
 		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&append_to_response=credits,videos,images,similar,reviews").then(res => {
 			this.setState({
-				details:res.data
+				details:res.data,
+				loading:false
 			})
 		})
-		if (this.state.loading) {
-			this.setState({loading:false})
-		}
+		this.getLists()
 		this.getStates()
 	}
 	getStates = () => {
@@ -74,9 +89,7 @@ class DetailedView extends React.Component {
 		if (session){
 			axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
 				this.setState({states: res.data})
-				if(this.state.states.rated) {
-					this.setState({rating: this.state.states.rated["value"]})
-				}
+				this.setState({rating: this.state.states.rated["value"]})
 			})
 		}
 	}
@@ -124,8 +137,31 @@ class DetailedView extends React.Component {
 			value: nextValue
 		}).then(res => {
 				this.getStates()
-				this.setState({rating: nextValue})
 			})
+	}
+	toggleListModal = () => {
+		this.setState({
+			listModal: !this.state.listModal
+		})
+	}
+	getListOptions = () => {
+		let result = this.state.listItems.map((item) => (
+			<option key={item.id} value={item.id}>{item.title}</option>
+		))
+		return result
+	}
+	setSelectedList = (e) => {
+		this.setState({
+			listSelectedId: e.target.value
+		})
+	}
+	addMovieToList = () => {
+		let data = {
+			media_id : this.state.details.id
+		}
+		axios.post("https://api.themoviedb.org/3/list/" + this.state.listSelectedId +"/add_item?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), data).then(res => {
+			NotificationManager.success(this.state.details.title + " successfully added to list", "Success")
+		})
 	}
 	render() {
 		if (this.state.details.length === 0) {
@@ -134,6 +170,7 @@ class DetailedView extends React.Component {
 		let year = this.state.details.release_date
 		let favorite_icon = this.checkFavorite()
 		let trailerUrl = ""
+		let listObjects = this.getListOptions()
 		if(year) {
 		  year = year.substring(0, 4)
 		  trailerUrl = this.getTrailerUrl()
@@ -158,6 +195,21 @@ class DetailedView extends React.Component {
 						<Button color="danger" outline onClick={() => this.toggleModal()}>Close</Button>
 					</ModalFooter>
 				</Modal>
+				<Modal isOpen={this.state.listModal} toggle={this.toggleListModal} centered>
+					<ModalHeader toggle={this.toggleListModal}>Add {this.state.details.title} to a list</ModalHeader>
+					<ModalBody>
+						<Input type="select" onChange={this.setSelectedList} value={this.state.listSelectedId}>
+							<option active>Select a list</option>
+							{this.state.listItems.map((item) => (
+								<option key={item.id} value={item.id}>{item.name}</option>
+							))}
+						</Input>
+					</ModalBody>
+					<ModalFooter>
+						<Button color="success" outline onClick={this.addMovieToList}>Submit</Button>
+						<Button color="danger" outline onClick={this.toggleListModal}>Close</Button>
+					</ModalFooter>
+				</Modal>
 				<div className="col-md-4">
 					<StickyBox offsetTop={100} offsetBottom={20}>
 						<Card cascade>
@@ -165,6 +217,7 @@ class DetailedView extends React.Component {
 							<CardBody>
 								<i className={favorite_icon} onClick={this.toggleFavorite} />
 								<Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>
+								{ localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <Button color="primary" outline onClick={this.toggleListModal}>Add to List</Button>}
 							</CardBody>
 						</Card>
 					</StickyBox>

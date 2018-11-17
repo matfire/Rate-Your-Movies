@@ -43,6 +43,7 @@ class NavBarComponent extends React.Component {
 	}
 	render() {
 		const options = this.renderLoggedInNavigation()
+		const User = JSON.parse(localStorage.getItem("User"))
 		return(
 					<Navbar color="blue" dark expand="md" id="top-section">
 						<NavbarBrand>
@@ -52,6 +53,12 @@ class NavBarComponent extends React.Component {
 						<Collapse isOpen={this.state.isOpen} navbar>
 						<NavbarNav left>
 							{options}
+						</NavbarNav>
+						<NavbarNav right>
+							<NavItem>
+								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <span className="mr-2" style={{color:"white"}}>Hi, {User.username}</span> &&
+								<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash + "?s=50"} alt={User.username} style={{borderRadius:"50%"}}/>}
+							</NavItem>
 						</NavbarNav>
 						</Collapse>
 					</Navbar>
