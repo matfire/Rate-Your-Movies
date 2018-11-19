@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Nav, Row, Col, Fa} from 'mdbreact';
-import {TabPane, TabContent, NavItem, NavLink, Input} from 'reactstrap'
+import {TabPane, TabContent, NavItem, NavLink, Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import StickyBox from "react-sticky-box";
@@ -47,6 +47,28 @@ class SimilarTab extends React.Component {
 			<ListGroup>
 				{data}
 			</ListGroup>
+		)
+	}
+}
+
+class OverviewTab extends React.Component {
+	renderImages = () => {
+
+	}
+	render() {
+		const images = this.renderImages()
+		return(
+			<div className="row mt-2">
+				<Card>
+					<CardBody>
+						<CardText>{this.props.data.overview}</CardText>
+						<CardText><strong>Videos & Photos</strong><span style={{marginLeft: "10px"}} onClick={() => this.props.updateTab(4)}>See all</span></CardText>
+							{images}
+						<CardText><strong>Cast</strong></CardText>
+						<CardText><strong>Reviews</strong></CardText>
+					</CardBody>
+				</Card>
+			</div>
 		)
 	}
 }
@@ -247,15 +269,13 @@ class DetailedView extends React.Component {
 								<NavItem>
 									<NavLink className={classnames({active: this.state.activeItem === 3})} onClick={() => this.changeTab(3)}>Similar</NavLink>
 								</NavItem>
+								<NavItem>
+									<NavLink className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Media</NavLink>
+								</NavItem>
 							</Nav>
 							<TabContent activeTab={this.state.activeItem}>
 								<TabPane tabId={1}>
-									<Row>
-										<Col md="12">
-										<br></br>
-										<p>1</p>
-										</Col>
-									</Row>
+									<OverviewTab data={this.state.details} updateTab={this.changeTab}/>
 								</TabPane>
 								<TabPane tabId={2}>
 									<Row>
