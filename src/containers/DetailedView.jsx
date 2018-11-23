@@ -5,7 +5,7 @@ import {Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
 import StickyBox from "react-sticky-box";
-import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner } from 'mdbreact';
+import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner, toast } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
 import {AtomSpinner} from 'react-epic-spinners'
@@ -21,8 +21,8 @@ class SimilarTab extends React.Component {
 			if (index < 4) {
 				let year = movie.release_date.substring(0,4)
 			return(
-			<React.Fragment>
-			<div className="row mt-2 mb-2" key={movie.id}>
+			<React.Fragment key={movie.id}>
+			<div className="row mt-2 mb-2" >
 				<div className="col-md-4">
 					<a href={"/movies/" + movie.id}>
 						<img className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + movie.poster_path} alt={movie.title} />
@@ -179,16 +179,17 @@ class DetailedView extends React.Component {
 		return result
 	}
 	setSelectedList = (e) => {
+		console.log(e)
 		this.setState({
-			listSelectedId: e.target.value
-		})
+			listSelectedId: e})
 	}
 	addMovieToList = () => {
 		let data = {
 			media_id : this.state.details.id
 		}
 		axios.post("https://api.themoviedb.org/3/list/" + this.state.listSelectedId +"/add_item?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), data).then(res => {
-			NotificationManager.success(this.state.details.title + " successfully added to list", "Success")
+			toast.success(this.state.details.title + " successfully added to list", "Success")
+			this.toggleListModal()
 		})
 	}
 	render() {
@@ -224,13 +225,11 @@ class DetailedView extends React.Component {
 				<Modal isOpen={this.state.listModal} toggle={this.toggleListModal} centered>
 					<ModalHeader toggle={this.toggleListModal}>Add {this.state.details.title} to a list</ModalHeader>
 					<ModalBody>
-						<MDBSelect>
-						<MDBSelectInput selected="Choose a list" onChange={this.setSelectedList} value={this.state.listSelectedId} />
+						<MDBSelect getValue={this.setSelectedList}>
+						<MDBSelectInput selected="Choose a list"  />
 						<MDBSelectOptions>
 							<MDBSelectOption disabled>Select a list</MDBSelectOption>
-							{this.state.listItems.map((item) => (
-								<option key={item.id} value={item.id}>{item.name}</option>
-							))}
+							{listObjects}
 						</MDBSelectOptions>
 						</MDBSelect>
 					</ModalBody>

@@ -1,14 +1,17 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, Chip } from "mdbreact";
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem } from "mdbreact";
 import SearchBar from './SearchBar'
-
-
+import axios from 'axios'
+import { DropdownToggle } from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 
 
 class NavBarComponent extends React.Component {
 	state = {
-		isOpen:false
+		isOpen:false,
+		searchQuery: "",
+		searchResult: []
 	}
 	toggle = () => {
 		this.setState({isOpen: !this.state.isOpen})
@@ -41,6 +44,25 @@ class NavBarComponent extends React.Component {
 			</React.Fragment>
 		)
 	}
+	handleSearchChange = (e) => {
+		console.log(e.target.value)
+		let language = "us-US"
+		let User = JSON.parse(localStorage.getItem("User"))
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}	
+		this.setState({searchQuery: e.target.value}, () => {
+			if (this.state.searchQuery && this.state.searchQuery.length > 1) {
+				if(this.state.searchQuery.length % 2 === 0) {
+					let query = encodeURI(this.state.searchQuery)
+					console.log(query)
+					axios.get("https://api.themoviedb.org/3/search/movie?api_key=2005b3a7fc676c3bd69383469a281eff&language="+language+"&query="+query+"&page=1&include_adult=false").then(res => {
+						this.setState({searchResult:res.data.results})
+					})
+				}
+			}
+		})
+	}
 	render() {
 		const options = this.renderLoggedInNavigation()
 		const User = JSON.parse(localStorage.getItem("User"))
@@ -57,12 +79,24 @@ class NavBarComponent extends React.Component {
 						<NavbarNav right>
 							<NavItem>
 								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
-									<Button color="danger" onClick={() => {
+									<Button color="danger" size="sm" onClick={() => {
 									localStorage.removeItem("User");
 									localStorage.removeItem("TMDB_session_id")
 									toast.success("You have been succesfully disconnected")
 									this.setState({isOpen: this.state.isOpen})
 									}}>Logout</Button>}
+							</NavItem>
+							<NavItem>
+									<FormInline waves onSubmit={(e) => {e.preventDefault()}}>
+										<div className="md-form my-0">
+											<input className="form-control mr-sm-2" type="text" placeholder="Search for a movie" aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
+										</div>
+									</FormInline>
+									<ListGroup>
+										{this.state.searchResult.map((movie, index) => (
+											index < 4 && <ListGroupItem key={movie.id} onClick={() => this.setState({searchQuery:""})}><a href={"/movies/" + movie.id}>{movie.title}</a></ListGroupItem>
+										))}
+									</ListGroup>
 							</NavItem>
 						</NavbarNav>
 						</Collapse>
