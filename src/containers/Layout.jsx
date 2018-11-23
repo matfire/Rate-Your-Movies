@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBarComponent from '../components/NavBar'
-import {NotificationContainer} from 'react-notifications'
 import {Button} from 'mdbreact'
+import {ToastContainer} from 'mdbreact'
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 import Footer from './Footer'
 class Layout extends React.Component {
@@ -9,8 +9,8 @@ class Layout extends React.Component {
 		return(
 			<div>
 				<NavBarComponent/>
-				<NotificationContainer/>
 				<div className="container">
+					<ToastContainer />
 					{this.props.children}
 					<ScrollUpButton />
 				</div>

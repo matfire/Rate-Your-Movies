@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, FormInline, Dropdown, DropdownToggle, DropdownMenu,  DropdownItem } from "mdbreact";
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, Chip } from "mdbreact";
 import SearchBar from './SearchBar'
 
 
@@ -56,8 +56,13 @@ class NavBarComponent extends React.Component {
 						</NavbarNav>
 						<NavbarNav right>
 							<NavItem>
-								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <span className="mr-2" style={{color:"white"}}>Hi, {User.username}</span> &&
-								<img src={"https://www.gravatar.com/avatar/" + User.gravatar_hash + "?s=50"} alt={User.username} style={{borderRadius:"50%"}}/>}
+								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
+									<Button color="danger" onClick={() => {
+									localStorage.removeItem("User");
+									localStorage.removeItem("TMDB_session_id")
+									toast.success("You have been succesfully disconnected")
+									this.setState({isOpen: this.state.isOpen})
+									}}>Logout</Button>}
 							</NavItem>
 						</NavbarNav>
 						</Collapse>
