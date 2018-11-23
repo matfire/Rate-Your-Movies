@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import {Nav, Row, Col, Fa} from 'mdbreact';
-import {TabPane, TabContent, NavItem, NavLink, Input, CardText} from 'reactstrap'
+import {Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
-import { ListGroup, ListGroupItem } from 'mdbreact'
+import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
 import StickyBox from "react-sticky-box";
 import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
@@ -59,15 +59,11 @@ class OverviewTab extends React.Component {
 		const images = this.renderImages()
 		return(
 			<div className="row mt-2">
-				<Card>
-					<CardBody>
-						<CardText>{this.props.data.overview}</CardText>
-						<CardText><strong>Videos & Photos</strong><span style={{marginLeft: "10px"}} onClick={() => this.props.updateTab(4)}>See all</span></CardText>
+						<p>{this.props.data.overview}<br></br>
+						<strong>Videos & Photos</strong><span style={{marginLeft: "10px"}} onClick={() => this.props.updateTab(4)}>See all</span><br></br>
 							{images}
-						<CardText><strong>Cast</strong></CardText>
-						<CardText><strong>Reviews</strong></CardText>
-					</CardBody>
-				</Card>
+						<strong>Cast</strong><br></br>
+						<strong>Reviews</strong></p>
 			</div>
 		)
 	}
@@ -106,12 +102,12 @@ class DetailedView extends React.Component {
 		this.getLists()
 		this.getStates()
 	}
-	getStates = () => {
+	getStates = (ratingValue) => {
 		let session = localStorage.getItem("TMDB_session_id")
 		if (session){
 			axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/account_states?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id")).then(res => {
 				this.setState({states: res.data})
-				this.setState({rating: this.state.states.rated["value"]})
+				this.setState({rating: ratingValue || this.state.states.rated["value"]})
 			})
 		}
 	}
@@ -158,7 +154,7 @@ class DetailedView extends React.Component {
 		axios.post("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/rating?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), {
 			value: nextValue
 		}).then(res => {
-				this.getStates()
+				this.getStates(nextValue)
 			})
 	}
 	toggleListModal = () => {
@@ -168,7 +164,7 @@ class DetailedView extends React.Component {
 	}
 	getListOptions = () => {
 		let result = this.state.listItems.map((item) => (
-			<option key={item.id} value={item.id}>{item.title}</option>
+			<MDBSelectOption key={item.id} value={item.id}>{item.title}</MDBSelectOption>
 		))
 		return result
 	}
@@ -220,12 +216,15 @@ class DetailedView extends React.Component {
 				<Modal isOpen={this.state.listModal} toggle={this.toggleListModal} centered>
 					<ModalHeader toggle={this.toggleListModal}>Add {this.state.details.title} to a list</ModalHeader>
 					<ModalBody>
-						<Input type="select" onChange={this.setSelectedList} value={this.state.listSelectedId}>
-							<option active>Select a list</option>
+						<MDBSelect>
+						<MDBSelectInput selected="Choose a list" onChange={this.setSelectedList} value={this.state.listSelectedId} />
+						<MDBSelectOptions>
+							<MDBSelectOption disabled>Select a list</MDBSelectOption>
 							{this.state.listItems.map((item) => (
 								<option key={item.id} value={item.id}>{item.name}</option>
 							))}
-						</Input>
+						</MDBSelectOptions>
+						</MDBSelect>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="success" outline onClick={this.addMovieToList}>Submit</Button>
@@ -258,22 +257,22 @@ class DetailedView extends React.Component {
 						</div>
 						<hr></hr>
 					</div>
-
-							<Nav tabs>
+						<div className="classic-tabs">
+							<Nav classicTabs className="nav-justified" color="blue">
 								<NavItem>
-									<NavLink className={classnames({active: this.state.activeItem === 1})} onClick={() => this.changeTab(1)}>Overview</NavLink>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 1})} onClick={() => this.changeTab(1)}>Overview</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className={classnames({active: this.state.activeItem === 2})} onClick={() => this.changeTab(2)}>Reviews</NavLink>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 2})} onClick={() => this.changeTab(2)}>Reviews</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className={classnames({active: this.state.activeItem === 3})} onClick={() => this.changeTab(3)}>Similar</NavLink>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 3})} onClick={() => this.changeTab(3)}>Similar</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Media</NavLink>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Media</NavLink>
 								</NavItem>
 							</Nav>
-							<TabContent activeTab={this.state.activeItem}>
+							<TabContent activeItem={this.state.activeItem} className="card">
 								<TabPane tabId={1}>
 									<OverviewTab data={this.state.details} updateTab={this.changeTab}/>
 								</TabPane>
@@ -287,6 +286,7 @@ class DetailedView extends React.Component {
 									<SimilarTab data={this.state.details.similar} />
 								</TabPane>
 							</TabContent>
+						</div>
 				</div>
 			</div>
 		)
