@@ -11,7 +11,12 @@ class ListDetailView extends React.Component {
 		favorites: {}
 	}
 	componentDidMount() {
-		axios.get("https://api.themoviedb.org/3/list/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US").then(res => {
+		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}
+		axios.get("https://api.themoviedb.org/3/list/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language).then(res => {
 			this.setState({
 				details: res.data
 			})
@@ -26,7 +31,12 @@ class ListDetailView extends React.Component {
 		)
 	}
 	getList = () => {
-		axios.get("https://api.themoviedb.org/3/list/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US").then(res => {
+		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}
+		axios.get("https://api.themoviedb.org/3/list/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language).then(res => {
 			this.setState({
 				details: res.data
 			})

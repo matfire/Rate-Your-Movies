@@ -44,7 +44,9 @@ class LoginView extends React.Component {
 							id: res.data.id,
 							name: res.data.name,
 							username: res.data.username,
-							gravatar_hash: res.data.avatar.gravatar.hash
+							gravatar_hash: res.data.avatar.gravatar.hash,
+							low_la: res.data.iso_639_1,
+							hi_la: res.data.iso_3166_1
 						}
 						localStorage.setItem("User", JSON.stringify(user))
 						this.setState({logged_in:true})

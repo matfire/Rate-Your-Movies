@@ -8333,7 +8333,7 @@ react-grid-gallery@^0.5.3:
     prop-types "^15.5.8"
     react-images "^0.5.16"
 
-react-image-lightbox@5.0.0:
+react-image-lightbox@5.0.0, react-image-lightbox@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.0.0.tgz#0c19aa8a43abf41262cbe082c779cc01f6334b5f"
   integrity sha512-2ivXwbpGeknDYb0zkfdeitXUvHCIFjLH/sHEBRSQoEV7hxVIXYpeSZxAPL2hJYoyGxBWzbcbLw4uJXXuD11kOw==

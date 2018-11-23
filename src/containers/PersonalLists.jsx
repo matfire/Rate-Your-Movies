@@ -16,10 +16,14 @@ class PersonalLists extends React.Component {
 	}
 	
 	componentDidMount() {
-		const User = localStorage.getItem("User")
+		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}
 		const session = localStorage.getItem("TMDB_session_id")
 		if (session) {
-		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
+		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
 			this.setState({
 				lists:res.data.results
 			})
@@ -27,10 +31,13 @@ class PersonalLists extends React.Component {
 	}
 	}
 	getLists = () => {
-		const User = localStorage.getItem("User")
-		const session = localStorage.getItem("TMDB_session_id")
+		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}		const session = localStorage.getItem("TMDB_session_id")
 		if (session) {
-		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
+		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
 			this.setState({
 				lists:res.data.results
 			})

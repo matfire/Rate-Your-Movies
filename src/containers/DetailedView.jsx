@@ -5,7 +5,7 @@ import {Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
 import StickyBox from "react-sticky-box";
-import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
+import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
 import {AtomSpinner} from 'react-epic-spinners'
@@ -21,8 +21,8 @@ class SimilarTab extends React.Component {
 			if (index < 4) {
 				let year = movie.release_date.substring(0,4)
 			return(
-			<ListGroupItem key={movie.id}>
-			<div className="row">
+			<React.Fragment>
+			<div className="row mt-2 mb-2" key={movie.id}>
 				<div className="col-md-4">
 					<a href={"/movies/" + movie.id}>
 						<img className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + movie.poster_path} alt={movie.title} />
@@ -36,7 +36,8 @@ class SimilarTab extends React.Component {
 					<hr></hr>
 				</div>
 			</div>
-			</ListGroupItem>
+			<hr></hr>
+			</React.Fragment>
 		)}})
 		return result
 		}
@@ -44,9 +45,9 @@ class SimilarTab extends React.Component {
 	render() {
 		const data = this.getSimilars()
 		return(
-			<ListGroup>
+			<React.Fragment>
 				{data}
-			</ListGroup>
+			</React.Fragment>
 		)
 	}
 }
@@ -83,9 +84,13 @@ class DetailedView extends React.Component {
 	}
 	getLists = () => {
 		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}
 		let session = localStorage.getItem("TMDB_session_id")
 		if (session && User) {
-			axios.get("https://api.themoviedb.org/3/account/" + User.id + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&session_id="+ session +"&language=en-US&page=1").then(res => {
+			axios.get("https://api.themoviedb.org/3/account/" + User.id + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&session_id="+ session +"&language=" + language + "&page=1").then(res => {
 				this.setState({
 					listItems: res.data.results
 				})
@@ -93,7 +98,12 @@ class DetailedView extends React.Component {
 		}
 	}
 	getData = () => {
-		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=en-US&append_to_response=credits,videos,images,similar,reviews").then(res => {
+		let User = JSON.parse(localStorage.getItem("User"))
+		let language="en-US"
+		if (User) {
+			language = User.low_la + "-" + User.hi_la
+		}
+		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&append_to_response=credits,videos,images,similar,reviews").then(res => {
 			this.setState({
 				details:res.data,
 				loading:false
@@ -196,9 +206,7 @@ class DetailedView extends React.Component {
 		if (this.state.loading === true) {
 			return(
 				<div className="row mt-5">
-					<div className="col-md-12" style={{textAlign:"center"}}>
-						<AtomSpinner color="blue" />
-					</div>
+					<Spinner blue big />
 				</div>
 			)
 		}
@@ -237,7 +245,7 @@ class DetailedView extends React.Component {
 							<CardImage className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + this.state.details.poster_path} alt={this.state.details.title} href={"/movies/" + this.props.match.params.id}/>
 							<CardBody>
 								<i className={favorite_icon} onClick={this.toggleFavorite} />
-								<Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>
+								{ trailerUrl && <Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>}
 								{ localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <Button color="primary" outline onClick={this.toggleListModal}>Add to List</Button>}
 							</CardBody>
 						</Card>
