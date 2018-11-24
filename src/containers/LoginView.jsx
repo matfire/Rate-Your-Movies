@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-import {Input, Button } from 'mdbreact';
+import {Input, Button, MDBRow, toast } from 'mdbreact';
 
 class LoginView extends React.Component {
 
@@ -28,16 +28,13 @@ class LoginView extends React.Component {
 		event.preventDefault()
 		axios.get("https://api.themoviedb.org/3/authentication/token/new?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
 			let token = res.data.request_token;
-			console.log(token)
 			let user_data = {
 				username: this.state.username,
 				password: this.state.password,
 				request_token: token
 			}
 			axios.post("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=2005b3a7fc676c3bd69383469a281eff", user_data).then(res => {
-				console.log(res)
 				axios.post("https://api.themoviedb.org/3/authentication/session/new?api_key=2005b3a7fc676c3bd69383469a281eff", {request_token:res.data.request_token}).then(res => {
-					console.log(res.data)
 					localStorage.setItem("TMDB_session_id", res.data.session_id)
 					axios.get("https://api.themoviedb.org/3/account?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + res.data.session_id).then(res => {
 						let user = {
@@ -49,9 +46,13 @@ class LoginView extends React.Component {
 							hi_la: res.data.iso_3166_1
 						}
 						localStorage.setItem("User", JSON.stringify(user))
-						this.setState({logged_in:true})
+						this.setState({logged_in:true}, () => {
+							toast.success("Welcome back, " + user.username)
+						})
 					})
 				})
+			}).catch(err => {
+				toast.error("Something went wrong. Are you sure your credentials are correct?")
 			})
 		})
 	}
@@ -62,8 +63,8 @@ class LoginView extends React.Component {
 			)
 		}
 		return(
-			<div className="row mt-5">
-        		<div className="md-12">
+			<MDBRow center className="mt-5">
+        		<div className="md-4">
             		<form onSubmit={this.requestLoginConfirmation}>
               			<p className="h5 text-center mb-4">Login with your TMDB(The Movie Database) Credentials</p>
 						<div className="grey-text">
@@ -75,7 +76,7 @@ class LoginView extends React.Component {
 						</div>
            			</form>
           		</div>
-        	</div>
+        	</MDBRow>
 		)
 	}
 }
