@@ -132,6 +132,7 @@ const CrewItem = (props) => {
 const CastCrewTab = (props) => {
 	let CrewSort = [].concat(props.data.crew).sort((a, b) => a.department > b.department)
 	return (
+		<React.Fragment>
 		<Row>
 			<Col>
 			<h3>Cast</h3><br></br>
@@ -142,16 +143,20 @@ const CastCrewTab = (props) => {
 					<ListGroupItem href={"/person/" + actor.id} key={actor.id}><ActorItem data={actor} /></ListGroupItem>
 				))}
 			</ListGroup>}
+		</Row>
+		<Row>	
 			<Col>
 			<h3>Crew</h3>
+			</Col>
+		
 			{CrewSort.length === 0 && <p>Sorry, no info regarding crew available at the moment</p>}
 			{CrewSort.length > 0 && <ListGroup>
 				{CrewSort.map((crew) => (
 					<ListGroupItem key={crew.id}><CrewItem data={crew} /></ListGroupItem>
 				))}
 			</ListGroup>}
-			</Col>
 		</Row>
+		</React.Fragment>
 	)
 }
 class DetailedView extends React.Component {
