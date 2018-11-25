@@ -18,10 +18,10 @@ const ActorItem = (props) => {
 	return(
 		<Row className="mt-2">
 			<Col md="2">
-				<img src={"https://image.tmdb.org/t/p/h632" + props.data.profile_path} className="img-fluid" alt={props.data.name} />
+				<img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className="img-fluid" alt={props.data.name} style={{borderRadius:"50%"}}/>
 			</Col>
 			<Col md="10">
-				<h2>{props.data.name} as {props.data.character}</h2>
+				<h6>{props.data.name} as {props.data.character}</h6>
 			</Col>
 		</Row>
 	)
@@ -86,14 +86,74 @@ class OverviewTab extends React.Component {
 		return(
 			<div className="row mt-2">
 						<p>{this.props.data.overview}<br></br>
-						<strong>Cast</strong><br></br>
+						<hr></hr>
+						<strong>Cast</strong>   <span onClick={() => this.props.updateTab(5)}>See more</span><br></br>
 						{cast}
-						<strong>Reviews</strong></p>
+						<br></br>
+						<hr></hr>
+						<strong>Reviews</strong>   <span onClick={() => this.props.updateTab(2)}>See More</span></p>
+						{this.props.data.reviews.results.length === 0 && <p>Sorry, no reviews are available at the moment</p>}
+						{this.props.data.reviews.results.length > 0 && <ListGroup>
+							{this.props.data.reviews.results.map((review, index) => (
+								index < 4 && <ListGroupItem key={review.id}>{review.content}<br></br>by {review.author}</ListGroupItem>
+							))}
+						</ListGroup>}
 			</div>
 		)
 	}
 }
 
+const ReviewsTab = (props) => (
+	<Row>
+	{props.data.reviews.results.length === 0 && <p>Sorry, no reviews available at the moment</p>}
+	{props.data.reviews.results.length > 0 && <ListGroup>
+		{props.data.reviews.results.map((review) => (
+			<ListGroupItem key={review.id}>{review.content}<br></br>by {review.author}</ListGroupItem>
+		))}
+	</ListGroup>}
+	</Row>
+)
+
+const CrewItem = (props) => {
+	return(
+		<Row className="mt-2">
+			{/* <Col md="2">
+				<img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className="img-fluid" alt={props.data.name} style={{borderRadius:"50%"}}/>
+			</Col> */}
+			<Col md="4">
+				<h6>{props.data.name}</h6>
+			</Col>
+			<Col md="8">
+				<h6>{props.data.job}</h6>
+			</Col>
+		</Row>
+	)
+}
+const CastCrewTab = (props) => {
+	let CrewSort = [].concat(props.data.crew).sort((a, b) => a.department > b.department)
+	return (
+		<Row>
+			<Col>
+			<h3>Cast</h3><br></br>
+			</Col>
+			{props.data.cast.lengh === 0 && <p>Sorry, no info regarding cast available at the moment</p>}
+			{props.data.cast.length > 0 && <ListGroup>
+				{props.data.cast.map((actor) => (
+					<ListGroupItem href={"/person/" + actor.id} key={actor.id}><ActorItem data={actor} /></ListGroupItem>
+				))}
+			</ListGroup>}
+			<Col>
+			<h3>Crew</h3>
+			{CrewSort.length === 0 && <p>Sorry, no info regarding crew available at the moment</p>}
+			{CrewSort.length > 0 && <ListGroup>
+				{CrewSort.map((crew) => (
+					<ListGroupItem key={crew.id}><CrewItem data={crew} /></ListGroupItem>
+				))}
+			</ListGroup>}
+			</Col>
+		</Row>
+	)
+}
 class DetailedView extends React.Component {
 	state = {
 		details: [],
@@ -302,19 +362,24 @@ class DetailedView extends React.Component {
 								<NavItem>
 									<NavLink to="#" className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Media</NavLink>
 								</NavItem>
+								<NavItem>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 5})} onClick={() => this.changeTab(5)}>Cast & Crew</NavLink>
+								</NavItem>
 							</Nav>
 							<TabContent activeItem={this.state.activeItem} className="card">
 								<TabPane tabId={1}>
 									<OverviewTab data={this.state.details} updateTab={this.changeTab}/>
 								</TabPane>
 								<TabPane tabId={2}>
-									<Row>
-										<br></br>
-										<p>2</p>
-									</Row>
+									<ReviewsTab data={this.state.details} />
 								</TabPane>
 								<TabPane tabId={3}>
 									<SimilarTab data={this.state.details.similar} />
+								</TabPane>
+								<TabPane tabId={4}>
+								</TabPane>
+								<TabPane tabId={5}>
+									<CastCrewTab data={this.state.details.credits} />
 								</TabPane>
 							</TabContent>
 						</div>
