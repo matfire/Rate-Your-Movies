@@ -1,8 +1,8 @@
 import React from 'react'
 import NavBarComponent from '../components/NavBar'
-import {Button} from 'mdbreact'
+import {Button, ButtonFixed} from 'mdbreact'
+
 import {ToastContainer} from 'mdbreact'
-import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 import Footer from './Footer'
 class Layout extends React.Component {
 	render() {
@@ -12,7 +12,7 @@ class Layout extends React.Component {
 				<div className="container">
 					<ToastContainer />
 					{this.props.children}
-					<ScrollUpButton />
+					<ButtonFixed topSection="#top-section" floating size="lg" color="blue" icon="arrow-up" style={{bottom: '45px', right: '24px'}}></ButtonFixed>
 				</div>
 				<Footer />
 			</div>

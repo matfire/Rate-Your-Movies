@@ -59,6 +59,8 @@ class NavBarComponent extends React.Component {
 					axios.get("https://api.themoviedb.org/3/search/movie?api_key=2005b3a7fc676c3bd69383469a281eff&language="+language+"&query="+query+"&page=1&include_adult=false").then(res => {
 						this.setState({searchResult:res.data.results})
 					})
+				} else if(this.state.searchQuery === "") {
+					this.setState({searchResult: []})
 				}
 			}
 		})

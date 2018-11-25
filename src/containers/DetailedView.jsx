@@ -3,13 +3,30 @@ import axios from 'axios'
 import {Nav, Row, Col, Fa} from 'mdbreact';
 import {Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
-import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
+import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink, CardGroup} from 'mdbreact'
 import StickyBox from "react-sticky-box";
 import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner, toast } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
-import {AtomSpinner} from 'react-epic-spinners'
-import { NotificationManager } from 'react-notifications';
+import Lightbox from 'react-image-lightbox';
+
+require ('mdbreact/docs/pages/pro/Lightbox.css');
+
+
+
+const ActorItem = (props) => {
+	return(
+		<Row className="mt-2">
+			<Col md="2">
+				<img src={"https://image.tmdb.org/t/p/h632" + props.data.profile_path} className="img-fluid" alt={props.data.name} />
+			</Col>
+			<Col md="10">
+				<h2>{props.data.name} as {props.data.character}</h2>
+			</Col>
+		</Row>
+	)
+}
+
 
 class SimilarTab extends React.Component {
 	getSimilars = () => {
@@ -53,17 +70,24 @@ class SimilarTab extends React.Component {
 }
 
 class OverviewTab extends React.Component {
-	renderImages = () => {
 
+	renderCast = () => {
+		let result = []
+		if (this.props.data.credits.cast) {
+			result = 		this.props.data.credits.cast.map((actor, index) => (
+				index < 10 && <ActorItem data={actor} />
+			))
+		}
+
+		return result
 	}
 	render() {
-		const images = this.renderImages()
+		const cast = this.renderCast()
 		return(
 			<div className="row mt-2">
 						<p>{this.props.data.overview}<br></br>
-						<strong>Videos & Photos</strong><span style={{marginLeft: "10px"}} onClick={() => this.props.updateTab(4)}>See all</span><br></br>
-							{images}
 						<strong>Cast</strong><br></br>
+						{cast}
 						<strong>Reviews</strong></p>
 			</div>
 		)
