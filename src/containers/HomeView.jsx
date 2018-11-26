@@ -58,8 +58,9 @@ class HomeView extends React.Component {
 		const UpComingMovieSliderItems = this.createMovieSliderComponents(this.state.movie_upcoming)
 		return(
 			<React.Fragment>
-					{!localStorage.getItem("User") && !localStorage.getItem("jwt") && <div className="alert alert-primary" role="alert">Don't forget to connect your <a href="https://www.themoviedb.org/">TMDB</a> account to enjoy all the functionalities of the application</div>}
 					<section className="text-center pt-5 filmtop pb-0 ">
+					{!localStorage.getItem("User") && !localStorage.getItem("jwt") && <div className="alert alert-primary" role="alert">Don't forget to connect your <a href="https://www.themoviedb.org/">TMDB</a> account to enjoy all the functionalities of the application</div>}
+
 						<div className="container">
 							<h2 className="h5-responsive font-weight-bold text-center text-uppercase white-text pb-5">Playing Now</h2>
 							<Carousel activeItem={1} length={6} slide={true} showControls={false} showIndicators={true} multiItem>
