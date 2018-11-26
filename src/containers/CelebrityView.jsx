@@ -47,9 +47,9 @@ class CelebrityView extends React.Component {
 							</Nav>
 							<TabContent className="card" activeItem={this.state.activeTab}>
 								<TabPane tabId={1}>
-									<Truncate lines={12}>{this.state.data.biography}</Truncate>
-									<a href="#" onClick={() => this.toggleTab(2)}>See Full Bio</a>
-									<br></br>
+									{ this.state.data.biography && <Truncate lines={12}>{this.state.data.biography}</Truncate>
+									&& <a href="#" onClick={() => this.toggleTab(2)}>See Full Bio</a> &&
+									<br></br>}
 									<h6>FILMOGRAPHY       <a href="#" onClick={() => this.toggleTab(3)}>See Full Filmography</a></h6>
 									{ this.state.data.movie_credits && this.state.data.movie_credits.cast.map((movie, index) => (
 										index < 10 &&
@@ -73,7 +73,7 @@ class CelebrityView extends React.Component {
 												<a href={"/movies/" + movie.id}><img src={"https://image.tmdb.org/t/p/w185" + movie.poster_path} alt={movie.title} className="img-fluid"/></a>
 											</Col>
 											<Col md="8">
-												<p>{movie.title} { movie.release_date && <small>movie.release_date.substring(0, 4)</small>}</p>
+												<p>{movie.title} { movie.release_date && <small>{movie.release_date.substring(0, 4)}</small>}</p>
 											</Col>
 										</Row>
 									))}								

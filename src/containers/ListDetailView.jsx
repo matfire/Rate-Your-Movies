@@ -109,6 +109,7 @@ class ListDetailView extends React.Component {
 	render(){
 		const movies = this.renderMovies()
 		return(
+			<div className="container">
 			<div className="row mt-5">
 				<div className="col">
 					<Card>
@@ -119,6 +120,7 @@ class ListDetailView extends React.Component {
 						</CardBody>
 					</Card>
 				</div>
+			</div>
 			</div>
 		)
 	}

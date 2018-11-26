@@ -46,9 +46,10 @@ class FavoritesView extends React.Component {
 			)
 		}
 		return(
+			<div className="container">
 			<div className="row mt-5">
-				<div className="col-md-12" style={{textAlign:"center"}}>
-					<h3>Your Favorite movies</h3>
+				<div className="col-md-12 pt-3" style={{textAlign:"center"}}>
+				<h1 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Your Favorite movies</h1>
 				</div>
 				<div className="col-md-12 mt-2">
 					<div style={{display:"flex", justifyContent:"flex-start", flexWrap:"wrap", alignItems:"inherit", marginRight:"-30px"}}>
@@ -60,6 +61,7 @@ class FavoritesView extends React.Component {
 						}
 					</div>
 				</div>
+			</div>
 			</div>
 		)
 	}

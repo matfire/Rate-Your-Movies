@@ -29,7 +29,11 @@ class Trending extends React.Component {
 			)
 		}
 		return(
+			<div className="container">
 			<div className="row mt-5 d-flex justify-content-center">
+			<div className="col-md-12 pt-3" style={{textAlign:"center"}}>
+				<h1 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Trending</h1>
+				</div>
 				{this.state.data.map((movie) => (
 							<div className="col-md-3" key={movie.id}>
 								<MovieCard data={movie} />
@@ -37,6 +41,7 @@ class Trending extends React.Component {
 						)
 					)
 				}
+			</div>
 			</div>
 		)
 	}

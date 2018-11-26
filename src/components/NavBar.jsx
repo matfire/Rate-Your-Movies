@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem } from "mdbreact";
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Col, Fa } from "mdbreact";
 import SearchBar from './SearchBar'
 import axios from 'axios'
 import { DropdownToggle } from 'reactstrap';
@@ -59,8 +59,6 @@ class NavBarComponent extends React.Component {
 					axios.get("https://api.themoviedb.org/3/search/movie?api_key=2005b3a7fc676c3bd69383469a281eff&language="+language+"&query="+query+"&page=1&include_adult=false").then(res => {
 						this.setState({searchResult:res.data.results})
 					})
-				} else if(this.state.searchQuery === "") {
-					this.setState({searchResult: []})
 				}
 			}
 		})
@@ -69,7 +67,9 @@ class NavBarComponent extends React.Component {
 		const options = this.renderLoggedInNavigation()
 		const User = JSON.parse(localStorage.getItem("User"))
 		return(
-					<Navbar color="blue" dark expand="md" id="top-section">
+			
+					<Navbar color=" pl-5 pr-5" dark expand="md" id="top-section">
+					<div className="container">
 						<NavbarBrand>
 				    		<a href="/" style={{color:"inherit"}}>Rate Your Movie</a>
 						</NavbarBrand>
@@ -78,20 +78,15 @@ class NavBarComponent extends React.Component {
 						<NavbarNav left>
 							{options}
 						</NavbarNav>
-						<NavbarNav right>
-							<NavItem>
-								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
-									<Button color="danger" size="sm" onClick={() => {
-									localStorage.removeItem("User");
-									localStorage.removeItem("TMDB_session_id")
-									toast.success("You have been succesfully disconnected")
-									this.setState({isOpen: this.state.isOpen})
-									}}>Logout</Button>}
-							</NavItem>
+						<NavbarNav left>
 							<NavItem>
 									<FormInline waves onSubmit={(e) => {e.preventDefault()}}>
 										<div className="md-form my-0">
-											<input className="form-control mr-sm-2" type="text" placeholder="Search for a movie" aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
+
+
+<Fa icon="search" /><input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search for a movie ..." aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
+										
+
 										</div>
 									</FormInline>
 									<ListGroup>
@@ -101,8 +96,21 @@ class NavBarComponent extends React.Component {
 									</ListGroup>
 							</NavItem>
 						</NavbarNav>
+						<NavbarNav right>	
+							<NavItem>
+								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
+									<Button color="cyan" size="sm" onClick={() => {
+									localStorage.removeItem("User");
+									localStorage.removeItem("TMDB_session_id")
+									toast.success("You have been succesfully disconnected")
+									this.setState({isOpen: this.state.isOpen})
+									}}>Logout</Button>}
+							</NavItem>
+						</NavbarNav>
 						</Collapse>
+						</div>
 					</Navbar>
+			
 		)
 	}
 }

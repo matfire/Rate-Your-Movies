@@ -4,12 +4,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
 import AliceCarousel from 'react-alice-carousel';
-import {Col, Carousel, CarouselItem, CarouselInner, Row, ListGroup, ListGroupItem, Fa} from 'mdbreact'
-
-
-
-
-
+import {Col, Carousel, CarouselItem, CarouselInner, Row, ListGroup, ListGroupItem, Fa, Avatar} from 'mdbreact'
 
 class HomeView extends React.Component {
 	state = {
@@ -63,60 +58,61 @@ class HomeView extends React.Component {
 		const UpComingMovieSliderItems = this.createMovieSliderComponents(this.state.movie_upcoming)
 		return(
 			<React.Fragment>
-				<div className="mt-5">
 					{!localStorage.getItem("User") && !localStorage.getItem("jwt") && <div className="alert alert-primary" role="alert">Don't forget to connect your <a href="https://www.themoviedb.org/">TMDB</a> account to enjoy all the functionalities of the application</div>}
-					<section className="text-center my-5">
-						<h2 className="h1-responsive font-weight-bold text-center my-5">Playing Now</h2>
-						<Carousel activeItem={1} length={6} slide={true} showIndicators={false} multiItem>
-							<CarouselInner>
-								<Row>
-									{PlayingMovieSliderItems}
-								</Row>
-							</CarouselInner>
-						</Carousel>
+					<section className="text-center pt-5 filmtop pb-0 ">
+						<div className="container">
+							<h2 className="h5-responsive font-weight-bold text-center text-uppercase white-text pb-5">Playing Now</h2>
+							<Carousel activeItem={1} length={6} slide={true} showControls={false} showIndicators={true} multiItem>
+								<CarouselInner>
+									<Row className="savemeg mb-4">
+										{PlayingMovieSliderItems}
+									</Row>
+								</CarouselInner>
+							</Carousel>
+						</div>
 					</section>
-					<Row>
-						<Col md="8">
-							<section className="text-center my-5">
-								<h2 className="h1-responsive font-weight-bold text-center my-5">Upcoming Movies</h2>
-								<Carousel activeItem={1} length={6} slide={true} showIndicators={false} multiItem>
-									<CarouselInner>
-										<Row>
-											{UpComingMovieSliderItems}
-										</Row>
-									</CarouselInner>
-								</Carousel>
-							</section>
-						</Col>
-						<Col md="4">
-							<h2 className="text-center">SPOTLIGHT CELEBRITIES</h2>
-							<hr></hr>
-							<ListGroup>
-								{this.state.trending_people.map((person, index) => (
-									index < 4 && <ListGroupItem key={person.id}>
-										<Row>
-											<Col md="4">
-												<img src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name} className="img-fluid" />
-												<p>{person.name}</p>
-											</Col>
-											<Col md="2">
-												known for
-											</Col>
-											<Col md="6">
-												<ListGroup>
+					<div className="container pt-0">
+						<div className="row">
+							<div className="col-md-8">
+								<section className="pt-0">
+									<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Upcoming Movies</h2>
+									<Carousel activeItem={1} length={6} slide={true} showControls={false}  showIndicators={true} multiItem>
+										<CarouselInner>
+										<Row className="savemeg">
+												{UpComingMovieSliderItems}
+											</Row>
+										</CarouselInner>
+									</Carousel>
+								</section>
+							</div>
+							<div className="col-md-4">
+								<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">SPOTLIGHT CELEBRITIES</h2>
+									{this.state.trending_people.map((person, index) => (
+										index < 4 && 
+											<Row className="mb-2 border border-light">
+												<Col md="3" className="pl-0">
+													<a href={"/persons/" + person.id}><img className="img-thumbnail" src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name} className="img-fluid"/></a>
+												</Col>
+												
+												<Col md="9" className="align-middle pl-0">
+												<p className="font-weight-bold">{person.name}</p>
+												
 												{person.known_for.map((movie) => (
-													<ListGroupItem href={"/movies/" + movie.id} key={movie.id}  style={{color:"inherit"}}>{movie.title}</ListGroupItem>
+													<p className="p-0 m-0"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
 												))}
-												</ListGroup>
-											</Col>
-										</Row>
-									</ListGroupItem>
-								))}
-							</ListGroup>
-							<a href="/people" style={{color:"inherit"}}><h4 className="text-center">See al celebrities <Fa icon="arrow-circle-right" /></h4></a>
-						</Col>
-					</Row>
-				</div>
+												</Col>
+											</Row>
+										
+									))}
+								
+							</div>
+						</div>
+					</div>
+
+
+
+					
+				
 		</React.Fragment>
 		)
 	}

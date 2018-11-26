@@ -26,7 +26,6 @@ export default class BaseRouter extends React.Component {
 								<Route exact path="/list" component={PersonalLists} />
 							</Switch>
 							<Switch>
-								<Route exact path="/persons" />
 								<Route path="/persons/:id"  component={CelebrityView}/>
 							</Switch>
 							<Route exact path="/favorites" component={FavoritesView} />
