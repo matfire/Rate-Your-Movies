@@ -8,6 +8,7 @@ import PersonalLists from './containers/PersonalLists'
 import ListDetailView from './containers/ListDetailView'
 import FavoritesView from './containers/FavoritesView'
 import HomeView from './containers/HomeView'
+import CelebrityView from './containers/CelebrityView'
 
 export default class BaseRouter extends React.Component {
 	render() {
@@ -25,8 +26,8 @@ export default class BaseRouter extends React.Component {
 								<Route exact path="/list" component={PersonalLists} />
 							</Switch>
 							<Switch>
-								<Route exact path="/actors" />
-								<Route path="/actor/:id" />
+								<Route exact path="/persons" />
+								<Route path="/persons/:id"  component={CelebrityView}/>
 							</Switch>
 							<Route exact path="/favorites" component={FavoritesView} />
 						</div>

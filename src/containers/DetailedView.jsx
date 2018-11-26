@@ -87,7 +87,7 @@ class OverviewTab extends React.Component {
 			<div className="row mt-2">
 						<p>{this.props.data.overview}<br></br>
 						<hr></hr>
-						<strong>Cast</strong>   <span onClick={() => this.props.updateTab(5)}>See more</span><br></br>
+						<strong>Cast</strong>   <span onClick={() => this.props.updateTab(4)}>See more</span><br></br>
 						{cast}
 						<br></br>
 						<hr></hr>
@@ -117,9 +117,6 @@ const ReviewsTab = (props) => (
 const CrewItem = (props) => {
 	return(
 		<Row className="mt-2">
-			{/* <Col md="2">
-				<img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className="img-fluid" alt={props.data.name} style={{borderRadius:"50%"}}/>
-			</Col> */}
 			<Col md="4">
 				<h6>{props.data.name}</h6>
 			</Col>
@@ -140,7 +137,7 @@ const CastCrewTab = (props) => {
 			{props.data.cast.lengh === 0 && <p>Sorry, no info regarding cast available at the moment</p>}
 			{props.data.cast.length > 0 && <ListGroup>
 				{props.data.cast.map((actor) => (
-					<ListGroupItem href={"/person/" + actor.id} key={actor.id}><ActorItem data={actor} /></ListGroupItem>
+					<ListGroupItem href={"/persons/" + actor.id} key={actor.id}><ActorItem data={actor} /></ListGroupItem>
 				))}
 			</ListGroup>}
 		</Row>
@@ -365,10 +362,7 @@ class DetailedView extends React.Component {
 									<NavLink to="#" className={classnames({active: this.state.activeItem === 3})} onClick={() => this.changeTab(3)}>Similar</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink to="#" className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Media</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink to="#" className={classnames({active: this.state.activeItem === 5})} onClick={() => this.changeTab(5)}>Cast & Crew</NavLink>
+									<NavLink to="#" className={classnames({active: this.state.activeItem === 4})} onClick={() => this.changeTab(4)}>Cast & Crew</NavLink>
 								</NavItem>
 							</Nav>
 							<TabContent activeItem={this.state.activeItem} className="card">
@@ -382,8 +376,6 @@ class DetailedView extends React.Component {
 									<SimilarTab data={this.state.details.similar} />
 								</TabPane>
 								<TabPane tabId={4}>
-								</TabPane>
-								<TabPane tabId={5}>
 									<CastCrewTab data={this.state.details.credits} />
 								</TabPane>
 							</TabContent>
