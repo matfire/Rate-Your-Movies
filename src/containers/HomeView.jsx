@@ -76,7 +76,7 @@ class HomeView extends React.Component {
 									<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Upcoming Movies</h2>
 									<Carousel activeItem={1} length={6} slide={true} showControls={false}  showIndicators={true} multiItem>
 										<CarouselInner>
-										<Row className="savemeg">
+											<Row className="savemeg">
 												{UpComingMovieSliderItems}
 											</Row>
 										</CarouselInner>

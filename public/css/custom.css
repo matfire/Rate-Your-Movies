@@ -8,11 +8,11 @@ body{background-color: #000}
 .list-group-item a {color:#000}
 .list-group-item a:hover {color:#17a2b8}
 .filmtop{background: url('/images/assets/slider-bg.jpg') no-repeat;background-position: bottom center;background-size: cover;}
-.carousel-indicators {top:-30px !important}
+.carousel-indicators {top:-30px !important; bottom: auto !important}
 .carousel-multi-item .carousel-indicators li {height: 0.75rem !important; width: 0.75rem !important; max-width: 0.75rem !important; background-color: rgba(23, 162, 184, 0.59) !important; margin-bottom: 0rem !important; margin-top: 0.10rem !important}
 .carousel-multi-item .carousel-indicators li.active {height: 1rem !important; width: 1rem !important; max-width: 1.25rem !important; background-color: rgba(23, 162, 184, 1) !important; margin-bottom: 0rem !important; margin-top: 0rem !important}
 
-.h5-responsive{letter-spacing: 2px !important;}
+.h5-responsive{letter-spacing: 2px !important;} 
 .savemeg{margin-left: 15px !important; margin-right: 15px !important}
 i.fa.fa-star{color:#ffc107; padding-right: 5px}
 i.fa.fa-search{color:#ffffff}
