@@ -308,7 +308,7 @@ class DetailedView extends React.Component {
 						<MDBSelect getValue={this.setSelectedList}>
 						<MDBSelectInput selected="Choose a list"  />
 						<MDBSelectOptions>
-							<MDBSelectOption disabled>Select a list</MDBSelectOption>
+							<MDBSelectOption disabled>Choose a list</MDBSelectOption>
 							{listObjects}
 						</MDBSelectOptions>
 						</MDBSelect>
