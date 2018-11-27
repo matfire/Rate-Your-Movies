@@ -254,7 +254,7 @@ class DetailedView extends React.Component {
 	}
 	getListOptions = () => {
 		let result = this.state.listItems.map((item) => (
-			<MDBSelectOption key={item.id} value={item.id}>{item.title}</MDBSelectOption>
+			<MDBSelectOption key={item.id} value={item.id}>{item.name}</MDBSelectOption>
 		))
 		return result
 	}
