@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Card, CardImg, CardBody,
+import { Card, CardBody,
 	CardTitle, Button, CardText } from 'mdbreact';
 import 	{NotificationManager} from 'react-notifications'
 

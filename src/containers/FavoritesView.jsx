@@ -1,5 +1,4 @@
 import React from 'react'
-import {Table, Button} from 'reactstrap'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import MovieCard from '../components/MovieCard'

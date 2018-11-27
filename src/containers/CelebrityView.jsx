@@ -1,5 +1,5 @@
 import React from 'react'
-import {Row, Col, MDBRow, MDBCol, TabPane, TabContent, Nav, NavItem, NavLink, Container} from 'mdbreact'
+import {MDBRow, MDBCol, TabPane, TabContent, Nav, NavItem, NavLink} from 'mdbreact'
 import classnames from 'classnames'
 import axios from 'axios'
 import Truncate from 'react-truncate';
@@ -26,11 +26,11 @@ class CelebrityView extends React.Component {
 	}
 	render() {
 		return(
-				<Row className="mt-5">
-					<Col md="4">
+				<MDBRow className="mt-5">
+					<MDBCol md="4">
 						<img src={"https://image.tmdb.org/t/p/h632" + this.state.data.profile_path} alt={this.state.data.name} className="img-fluid"/>
-					</Col>
-					<Col md="8">
+					</MDBCol>
+					<MDBCol md="8">
 						<h2>{this.state.data.name}</h2>
 						<p>{this.state.data.known_for_department}</p>
 						<div className="classic-tabs">
@@ -47,20 +47,20 @@ class CelebrityView extends React.Component {
 							</Nav>
 							<TabContent className="card" activeItem={this.state.activeTab}>
 								<TabPane tabId={1}>
-									{ this.state.data.biography && <Truncate lines={12}>{this.state.data.biography}</Truncate>
-									&& <a href="#" onClick={() => this.toggleTab(2)}>See Full Bio</a> &&
-									<br></br>}
+									<Truncate lines={12}>{this.state.data.biography}</Truncate>
+									{this.state.data.biography && <a href="#" onClick={() => this.toggleTab(2)}>See Full Bio</a>}
+									<br></br>
 									<h6>FILMOGRAPHY       <a href="#" onClick={() => this.toggleTab(3)}>See Full Filmography</a></h6>
 									{ this.state.data.movie_credits && this.state.data.movie_credits.cast.map((movie, index) => (
 										index < 10 &&
-										<Row className="mt-3" key={movie.id}>
-											<Col md="4">
+										<MDBRow className="mt-3" key={movie.id}>
+											<MDBCol md="4">
 											<a href={"/movies/" + movie.id}><img src={"https://image.tmdb.org/t/p/w185" + movie.poster_path} alt={movie.title} className="img-fluid"/></a>
-											</Col>
-											<Col md="8">
+											</MDBCol>
+											<MDBCol md="8">
 												<p>{movie.title} <small>{movie.release_date.substring(0, 4)}</small></p>
-											</Col>
-										</Row>
+											</MDBCol>
+										</MDBRow>
 									))}
 								</TabPane>
 								<TabPane tabId={2}>
@@ -68,20 +68,20 @@ class CelebrityView extends React.Component {
 								</TabPane>
 								<TabPane tabId={3}>
 								{ this.state.data.movie_credits && this.state.data.movie_credits.cast.map((movie, index) => (
-										<Row className="mt-3" key={movie.id}>
-											<Col md="4">
+										<MDBRow className="mt-3" key={movie.id}>
+											<MDBCol md="4">
 												<a href={"/movies/" + movie.id}><img src={"https://image.tmdb.org/t/p/w185" + movie.poster_path} alt={movie.title} className="img-fluid"/></a>
-											</Col>
-											<Col md="8">
+											</MDBCol>
+											<MDBCol md="8">
 												<p>{movie.title} { movie.release_date && <small>{movie.release_date.substring(0, 4)}</small>}</p>
-											</Col>
-										</Row>
+											</MDBCol>
+										</MDBRow>
 									))}								
 								</TabPane>
 							</TabContent>
 						</div>
-					</Col>
-				</Row>
+					</MDBCol>
+				</MDBRow>
 		)
 	}
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Container, Row, Footer } from "mdbreact";
+import {Container, Footer } from "mdbreact";
 
 class FooterPage extends React.Component {
 render() {
@@ -8,7 +8,7 @@ return (
   <Container className="">
     <div className="row pb-5">
       <div className="col-sm text-center">
-      <a href="https://www.themoviedb.org" target="_blank"><img src="/images/assets/TMDB.png" ALT="TMBD" className="img-fluid"/></a>
+      <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer"><img src="/images/assets/TMDB.png" ALT="TMBD" className="img-fluid"/></a>
       </div>
       <div className="col-sm text-center">
         <h6>RATE YOUR MOVIE</h6>

@@ -1,18 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import {Nav, Row, Col, Fa} from 'mdbreact';
-import {Input, CardText} from 'reactstrap'
 import classnames from 'classnames';
-import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink, CardGroup} from 'mdbreact'
+import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
 import StickyBox from "react-sticky-box";
 import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner, toast } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
-import Lightbox from 'react-image-lightbox';
-
-require ('mdbreact/docs/pages/pro/Lightbox.css');
-
-
 
 const ActorItem = (props) => {
 	return(

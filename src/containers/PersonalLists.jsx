@@ -4,7 +4,6 @@ import {Table} from 'reactstrap'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Fa} from 'mdbreact'
 import 	{NotificationManager} from 'react-notifications'
 import {Redirect} from 'react-router-dom'
-import { insertGlobal } from 'glamor';
 class PersonalLists extends React.Component {
 	state = {
 		lists: [],
@@ -133,7 +132,7 @@ class PersonalLists extends React.Component {
 					<tbody>
 						{this.state.lists.map((list) => (
 							<tr key={list.id}>
-								<td scope="row" className="text-left"><a href={"/list/" + list.id}>{list.name}</a></td>
+								<td className="text-left"><a href={"/list/" + list.id}>{list.name}</a></td>
 								<td className="text-left">{list.description}</td>
 								
 								<td className="text-right"> <Button tag="a" floating gradient="peach" onClick={() => {this.handleDeleteList(list.id)}}><Fa icon="trash" /></Button></td>

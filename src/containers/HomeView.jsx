@@ -1,10 +1,7 @@
 import React from 'react'
-import {Jumbotron, Button} from 'reactstrap'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
-import AliceCarousel from 'react-alice-carousel';
-import {Col, Carousel, CarouselItem, CarouselInner, Row, ListGroup, ListGroupItem, Fa, Avatar} from 'mdbreact'
+import {Col, Carousel, CarouselItem, CarouselInner, Row} from 'mdbreact'
 
 class HomeView extends React.Component {
 	state = {
@@ -90,9 +87,9 @@ class HomeView extends React.Component {
 								<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">SPOTLIGHT CELEBRITIES</h2>
 									{this.state.trending_people.map((person, index) => (
 										index < 4 && 
-											<Row className="mb-2 border border-light">
+											<Row className="mb-2 border border-light" key={person.id}>
 												<Col md="3" className="pl-0">
-													<a href={"/persons/" + person.id}><img className="img-thumbnail" src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name} className="img-fluid"/></a>
+													<a href={"/persons/" + person.id}><img className="img-thumbnail img-fluid" src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name}/></a>
 												</Col>
 												
 												<Col md="9" className="align-middle pl-0">
