@@ -4,6 +4,7 @@ import {Table} from 'reactstrap'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Fa} from 'mdbreact'
 import 	{NotificationManager} from 'react-notifications'
 import {Redirect} from 'react-router-dom'
+import { insertGlobal } from 'glamor';
 class PersonalLists extends React.Component {
 	state = {
 		lists: [],
@@ -104,7 +105,8 @@ class PersonalLists extends React.Component {
 			<div className="container">
 			<div className="row mt-5 d-flex justify-content-center">
 			<div className="col-md-12 pt-3" style={{textAlign:"center"}}>
-				<h1 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Trending</h1>
+				<h1 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Your Lists</h1>
+				<Button color="cyan" className="float-right"  onClick={this.toggleModal}>Add List</Button>
 				<Modal isOpen={this.state.isModalOpen} toggle={() => this.toggleModal()} centered >
 					
 					<ModalHeader className="cyan white-text" toggle={() => this.toggleModal()}><h4 className="title">
@@ -124,15 +126,15 @@ class PersonalLists extends React.Component {
 				<Table>
 					<thead>
 						<tr>
-							<th className="text-left">Name</th>
-							<th className="text-left">Description</th>
-							<th className="text-right"><Button color="cyan"  onClick={this.toggleModal}>Add List</Button></th>
+							<th className="text-left">NAME</th>
+							<th className="text-left">DESCRIPTION</th>
+							<th className="text-right"></th>
 						</tr>
 					</thead>
 					<tbody>
 						{this.state.lists.map((list) => (
 							<tr key={list.id}>
-								<td className="text-left"><a href={"/list/" + list.id}>{list.name}</a></td>
+								<td scope="row" className="text-left"><a href={"/list/" + list.id}><strong>{list.name}</strong></a></td>
 								<td className="text-left">{list.description}</td>
 								
 								<td className="text-right"> <Button tag="a" floating gradient="peach" onClick={() => {this.handleDeleteList(list.id)}}><Fa icon="trash" /></Button></td>
@@ -140,6 +142,7 @@ class PersonalLists extends React.Component {
 						))}
 					</tbody>
 				</Table>
+				<Button color="cyan" className="float-right"  onClick={this.toggleModal}>Add List</Button>
 			</div>
 			</div>
 			</div>

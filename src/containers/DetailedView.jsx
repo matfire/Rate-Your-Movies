@@ -10,14 +10,13 @@ import Truncate from 'react-truncate';
 
 const ActorItem = (props) => {
 	return(
-		<Row className="mt-2">
-			<Col md="2">
-				<img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className="img-fluid" alt={props.data.name} style={{borderRadius:"50%"}}/>
-			</Col>
-			<Col md="10">
-				<h6>{props.data.name} as {props.data.character}</h6>
-			</Col>
-		</Row>
+		<React.Fragment>
+			<div className="clearfix  mb-2">
+			<a href={"/persons/" + props.data.id}><img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className=" z-depth-1 float-left mr-3" alt={props.data.name} /></a>
+			<p className="pt-3"><a href={"/persons/" + props.data.id}><strong>{props.data.name}</strong></a> <em>as </em>{props.data.character}</p>
+			</div>
+			</React.Fragment>
+			
 	)
 }
 
@@ -36,15 +35,15 @@ class SimilarTab extends React.Component {
 			<div className="row mt-2 mb-2" >
 				<div className="col-md-4">
 					<a href={"/movies/" + movie.id}>
-						<img className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + movie.poster_path} alt={movie.title} />
+						<img className="img-fluid z-depth-2" src={"https://image.tmdb.org/t/p/w342/" + movie.poster_path} alt={movie.title} />
 					</a>
 				</div>
 
 				<div className="col-md-8">
-					<h4>{movie.title}({year})</h4>
+					<h4><a href={"/movies/" + movie.id}>{movie.title}</a>  ({year})</h4>
 					<Fa icon="star" style={{color:"#f5b50a"}} /> {movie.vote_average}/10<br></br>
 					<Truncate lines={3}>{movie.overview}</Truncate>
-					<hr></hr>
+					
 				</div>
 			</div>
 			<hr></hr>
@@ -68,7 +67,7 @@ class OverviewTab extends React.Component {
 	renderCast = () => {
 		let result = []
 		if (this.props.data.credits.cast) {
-			result = 		this.props.data.credits.cast.map((actor, index) => (
+			result = this.props.data.credits.cast.map((actor, index) => (
 				index < 10 && <ActorItem data={actor} />
 			))
 		}
@@ -78,75 +77,57 @@ class OverviewTab extends React.Component {
 	render() {
 		const cast = this.renderCast()
 		return(
-			<div className="row mt-2">
-						<p>{this.props.data.overview}<br></br>
-						<hr></hr>
-						<strong>Cast</strong>   <span onClick={() => this.props.updateTab(4)}>See more</span><br></br>
-						{cast}
-						<br></br>
-						<hr></hr>
-						<strong>Reviews</strong>   <span onClick={() => this.props.updateTab(2)}>See More</span></p>
-						{this.props.data.reviews.results.length === 0 && <p>Sorry, no reviews are available at the moment</p>}
-						{this.props.data.reviews.results.length > 0 && <ListGroup>
-							{this.props.data.reviews.results.map((review, index) => (
-								index < 4 && <ListGroupItem key={review.id}>{review.content}<br></br>by {review.author}</ListGroupItem>
-							))}
-						</ListGroup>}
-			</div>
+			
+						<p>{this.props.data.overview}</p>
+						
+			
 		)
 	}
 }
 
 const ReviewsTab = (props) => (
-	<Row>
+	<React.Fragment>
 	{props.data.reviews.results.length === 0 && <p>Sorry, no reviews available at the moment</p>}
 	{props.data.reviews.results.length > 0 && <ListGroup>
 		{props.data.reviews.results.map((review) => (
-			<ListGroupItem key={review.id}>{review.content}<br></br>by {review.author}</ListGroupItem>
+			<ListGroupItem key={review.id}>{review.content}<br /><br /><em>by {review.author}</em></ListGroupItem>
 		))}
 	</ListGroup>}
-	</Row>
+	</React.Fragment>
 )
 
 const CrewItem = (props) => {
 	return(
-		<Row className="mt-2">
-			<Col md="4">
-				<h6>{props.data.name}</h6>
-			</Col>
-			<Col md="8">
-				<h6>{props.data.job}</h6>
-			</Col>
-		</Row>
+		
+			<p className="m-2 p-0" style={{lineHeight: "1em"}}>{props.data.name} - <em>{props.data.job}</em></p> 
+			
 	)
 }
 const CastCrewTab = (props) => {
 	let CrewSort = [].concat(props.data.crew).sort((a, b) => a.department > b.department)
 	return (
 		<React.Fragment>
-		<Row>
-			<Col>
-			<h3>Cast</h3><br></br>
-			</Col>
+			<Row className="mt-2">
+			<Col md="6">
+			<h6 className="mb-4">CAST</h6>
+			
 			{props.data.cast.lengh === 0 && <p>Sorry, no info regarding cast available at the moment</p>}
-			{props.data.cast.length > 0 && <ListGroup>
-				{props.data.cast.map((actor) => (
-					<ListGroupItem href={"/persons/" + actor.id} key={actor.id}><ActorItem data={actor} /></ListGroupItem>
+			{props.data.cast.length > 0 && props.data.cast.map((actor) => (
+				<ActorItem key={actor.id} data={actor} />
 				))}
-			</ListGroup>}
-		</Row>
-		<Row>	
-			<Col>
-			<h3>Crew</h3>
 			</Col>
+
+			<Col md="6">
+			<h6 className="mb-4">CREW</h6>
+			
 		
 			{CrewSort.length === 0 && <p>Sorry, no info regarding crew available at the moment</p>}
-			{CrewSort.length > 0 && <ListGroup>
-				{CrewSort.map((crew) => (
-					<ListGroupItem key={crew.id}><CrewItem data={crew} /></ListGroupItem>
+			{CrewSort.length > 0 && CrewSort.map((crew) => (
+					<CrewItem data={crew} key={crew.id}/>
 				))}
-			</ListGroup>}
-		</Row>
+			</Col>
+			</Row>
+		
 		</React.Fragment>
 	)
 }
@@ -236,9 +217,9 @@ class DetailedView extends React.Component {
 			return
 		}
 		if(this.state.states.favorite === false) {
-			return("far fa-heart")
+			return("far fa-heart fa-2x ")
 		}
-		return("fa fa-heart")
+		return("fa fa-heart fa-2x ")
 	}
 	handleRatingChange = (nextValue, prevValue, name) => {
 		axios.post("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "/rating?api_key=2005b3a7fc676c3bd69383469a281eff&session_id=" + localStorage.getItem("TMDB_session_id"), {
@@ -286,12 +267,13 @@ class DetailedView extends React.Component {
 		}
 		if (this.state.loading === true) {
 			return(
-				<div className="row mt-5">
+				<div className="row mt-5 text-center">
 					<Spinner blue big />
 				</div>
 			)
 		}
 		return(
+			<div className="container">
 			<div className="row mt-5">
 				<Modal isOpen={this.state.trailerModal} toggle={() => this.toggleModal()} centered size="lg">
 					<ModalHeader toggle={() => this.toggleModal()}>Trailer for {this.state.details.title}</ModalHeader>
@@ -299,7 +281,7 @@ class DetailedView extends React.Component {
 						<Iframe src={trailerUrl} />
 					</ModalBody>
 					<ModalFooter>
-						<Button color="danger" outline onClick={() => this.toggleModal()}>Close</Button>
+						<Button color="blue-grey" outline onClick={() => this.toggleModal()}>Close</Button>
 					</ModalFooter>
 				</Modal>
 				<Modal isOpen={this.state.listModal} toggle={this.toggleListModal} centered>
@@ -308,24 +290,25 @@ class DetailedView extends React.Component {
 						<MDBSelect getValue={this.setSelectedList}>
 						<MDBSelectInput selected="Choose a list"  />
 						<MDBSelectOptions>
-							<MDBSelectOption disabled>Choose a list</MDBSelectOption>
+							<MDBSelectOption disabled>Select a list</MDBSelectOption>
 							{listObjects}
 						</MDBSelectOptions>
 						</MDBSelect>
 					</ModalBody>
 					<ModalFooter>
-						<Button color="success" outline onClick={this.addMovieToList}>Submit</Button>
-						<Button color="danger" outline onClick={this.toggleListModal}>Close</Button>
+						<Button color="cyan" onClick={this.addMovieToList}>Submit</Button>
+						<Button color="blue-grey" outline onClick={this.toggleListModal}>Close</Button>
 					</ModalFooter>
 				</Modal>
-				<div className="col-md-4">
+				<div className="col-md-4 ">
 					<StickyBox offsetTop={100} offsetBottom={20}>
-						<Card cascade>
+						<Card cascade className="ml-2 mr-2">
 							<CardImage className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + this.state.details.poster_path} alt={this.state.details.title} href={"/movies/" + this.props.match.params.id}/>
-							<CardBody>
-								<i className={favorite_icon} onClick={this.toggleFavorite} />
-								{ trailerUrl && <Button onClick={() => this.toggleModal()} color="danger" outline>Watch Trailer</Button>}
-								{ localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <Button color="primary" outline onClick={this.toggleListModal}>Add to List</Button>}
+							<CardBody className="text-center">
+								<i className={favorite_icon} onClick={this.toggleFavorite} /> <br />
+								
+								{ localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") && <Button color="cyan" outline onClick={this.toggleListModal}  >Add to List</Button>}<br />
+								{ trailerUrl && <Button onClick={() => this.toggleModal()} color="cyan" >Watch Trailer</Button>} 
 							</CardBody>
 						</Card>
 					</StickyBox>
@@ -345,7 +328,7 @@ class DetailedView extends React.Component {
 						<hr></hr>
 					</div>
 						<div className="classic-tabs">
-							<Nav classicTabs className="nav-justified" color="blue">
+							<Nav classicTabs className="nav-justified">
 								<NavItem>
 									<NavLink to="#" className={classnames({active: this.state.activeItem === 1})} onClick={() => this.changeTab(1)}>Overview</NavLink>
 								</NavItem>
@@ -375,6 +358,7 @@ class DetailedView extends React.Component {
 							</TabContent>
 						</div>
 				</div>
+			</div>
 			</div>
 		)
 	}

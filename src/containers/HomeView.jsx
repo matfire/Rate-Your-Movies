@@ -69,7 +69,7 @@ class HomeView extends React.Component {
 							</Carousel>
 						</div>
 					</section>
-					<div className="container pt-0">
+					<div className="container pt-0 ">
 						<div className="row">
 							<div className="col-md-8">
 								<section className="pt-0">
@@ -86,17 +86,17 @@ class HomeView extends React.Component {
 							<div className="col-md-4">
 								<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">SPOTLIGHT CELEBRITIES</h2>
 									{this.state.trending_people.map((person, index) => (
-										index < 4 && 
+										index < 3 && 
 											<Row className="mb-2 border border-light" key={person.id}>
-												<Col md="3" className="pl-0">
-													<a href={"/persons/" + person.id}><img className="img-thumbnail img-fluid" src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name}/></a>
+												<Col md="4" className="pl-0 text-center">
+													<a href={"/persons/" + person.id}><img className="img-fluid" src={"https://image.tmdb.org/t/p/w185" +person.profile_path} alt={person.name}/></a>
 												</Col>
 												
-												<Col md="9" className="align-middle pl-0">
-												<p className="font-weight-bold">{person.name}</p>
+												<Col md="8" className="align-middle pl-0">
+												<p className="font-weight-bold pt-2 pl-2 pr-2 mb-0"><a href={"/persons/" + person.id}>{person.name}</a></p>
 												
 												{person.known_for.map((movie) => (
-													<p className="p-0 m-0"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
+													<p className="film pl-2 pr-2"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
 												))}
 												</Col>
 											</Row>

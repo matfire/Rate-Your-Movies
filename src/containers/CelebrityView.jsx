@@ -26,13 +26,14 @@ class CelebrityView extends React.Component {
 	}
 	render() {
 		return(
+			<div className="container">
 				<MDBRow className="mt-5">
 					<MDBCol md="4">
-						<img src={"https://image.tmdb.org/t/p/h632" + this.state.data.profile_path} alt={this.state.data.name} className="img-fluid"/>
+						<img src={"https://image.tmdb.org/t/p/h632" + this.state.data.profile_path} alt={this.state.data.name} className="img-fluid  z-depth-2"/>
 					</MDBCol>
 					<MDBCol md="8">
 						<h2>{this.state.data.name}</h2>
-						<p>{this.state.data.known_for_department}</p>
+						
 						<div className="classic-tabs">
 							<Nav classicTabs color="blue">
 								<NavItem>
@@ -55,7 +56,7 @@ class CelebrityView extends React.Component {
 										index < 10 &&
 										<MDBRow className="mt-3" key={movie.id}>
 											<MDBCol md="4">
-											<a href={"/movies/" + movie.id}><img src={"https://image.tmdb.org/t/p/w185" + movie.poster_path} alt={movie.title} className="img-fluid"/></a>
+											<a href={"/movies/" + movie.id}><img src={"https://image.tmdb.org/t/p/w185" + movie.poster_path} alt={movie.title} className="img-fluid  z-depth-1"/></a>
 											</MDBCol>
 											<MDBCol md="8">
 												<p>{movie.title} <small>{movie.release_date.substring(0, 4)}</small></p>
@@ -82,6 +83,7 @@ class CelebrityView extends React.Component {
 						</div>
 					</MDBCol>
 				</MDBRow>
+				</div>
 		)
 	}
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import { Card, CardBody,
-	CardTitle, Button, CardText } from 'mdbreact';
+import { Card, CardImg, CardBody,
+	CardTitle, Button, CardText, Fa } from 'mdbreact';
 import 	{NotificationManager} from 'react-notifications'
 
 
@@ -79,29 +79,35 @@ class ListDetailView extends React.Component {
 	renderMovies = () => {
 		if (this.state.details.items) {
 			const movies = this.state.details.items.map((item) => {
-				let heart_class = "fa-heart"
+				let heart_class = "fa-heart fa-3x mb-2"
 				if (this.state.favorites[item.id] === true){
 					heart_class = "fas " + heart_class
 				} else {
 					heart_class = "far " + heart_class
 				}
 				return(
-					<div className="row mt-3" key={item.id}>
-						<div className="col-sm-2">
+					<Card className="mb-3">
+						<CardBody>
+						<div className="row">
+						<div className="col-sm-4">
 						<a href={"/movies/" + item.id}>
-							<img src={"https://image.tmdb.org/t/p/w154" + item.poster_path} alt={item.title}/>
+							<img src={"https://image.tmdb.org/t/p/w300" + item.poster_path} alt={item.title}/>
 						</a>
-							<div className="w-100">
-							<i className={heart_class} onClick={() => {this.handleFavorite(item.id)}}></i><Button outline color="danger" onClick={() => this.handleRemoveFromList(item.id)}>Remove</Button>
-							</div>
+							
 						</div>
-						<div className="col-sm-5">
-							<p>{item.title}</p>
-						</div>
-						<div className="col-sm-5">
+						<div className="col-sm-8 text-left pt-3">
+							<h3><a href={"/movies/" + item.id}>{item.title}</a></h3>
 							<p>{item.overview}</p>
+							<br />
+							<i className={heart_class} onClick={() => {this.handleFavorite(item.id)}} style={{color:"red"}}></i>
+							<br />
+
+							<Button className="ml-0" tag="a" floating gradient="peach" onClick={() => this.handleRemoveFromList(item.id)}><Fa icon="trash" /></Button>
+							
 						</div>
-					</div>	
+						</div>
+						</CardBody>
+						</Card>
 			)})
 			return movies
 		}
@@ -109,20 +115,18 @@ class ListDetailView extends React.Component {
 	render(){
 		const movies = this.renderMovies()
 		return(
-			<div className="container">
-			<div className="row mt-5">
-				<div className="col">
-					<Card>
-						<CardBody>
-							<CardTitle style={{textAlign:"center"}}>{this.state.details.name}</CardTitle>
-							<CardText style={{textAlign:"center", marginBottom:"80px"}}>{this.state.details.description}</CardText>
-							{movies}
-						</CardBody>
-					</Card>
-				</div>
-			</div>
-			</div>
-		)
+			            <div className="container">
+			            <div className="row d-flex justify-content-center">
+			            <div className="col-md-12 " style={{textAlign:"center"}}>
+			                <h1 className="h5-responsive font-weight-bold text-center text-uppercase">Your Lists</h1>
+			                <p className="pb-2">{this.state.details.description}</p>
+			            
+			                    {movies}
+			                        
+			                </div>
+			            </div>
+			            </div>
+			        )
 	}
 }
 

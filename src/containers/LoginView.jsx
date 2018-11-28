@@ -72,7 +72,7 @@ class LoginView extends React.Component {
 							<Input label="Type your password" icon="lock" group type="password" validate onChange={this.handlePasswordChange} required/>
 						</div>
 						<div className="text-center">
-							<Button type="submit">Login</Button>
+							<Button type="submit" color="cyan">Login</Button>
 						</div>
            			</form>
           		</div>
