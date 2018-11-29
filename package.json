@@ -1,0 +1,13 @@
+{
+  "name": "tmdb_cache_server",
+  "version": "1.0.0",
+  "description": "A caching server for tmdb requests",
+  "main": "server.js",
+  "author": "Matteo Gassend",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^5.0.1",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}
