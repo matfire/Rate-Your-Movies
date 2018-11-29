@@ -285,7 +285,7 @@ class DetailedView extends React.Component {
 					</ModalFooter>
 				</Modal>
 				<Modal isOpen={this.state.listModal} toggle={this.toggleListModal} centered>
-					<ModalHeader toggle={this.toggleListModal}>Add {this.state.details.title} to a list</ModalHeader>
+				<ModalHeader className="cyan white-text" toggle={this.toggleListModal}>Add {this.state.details.title} to a list</ModalHeader>
 					<ModalBody>
 						<MDBSelect getValue={this.setSelectedList}>
 						<MDBSelectInput selected="Choose a list"  />
@@ -295,7 +295,7 @@ class DetailedView extends React.Component {
 						</MDBSelectOptions>
 						</MDBSelect>
 					</ModalBody>
-					<ModalFooter>
+					<ModalFooter className="border-0 mt-0 pt-0">
 						<Button color="cyan" onClick={this.addMovieToList}>Submit</Button>
 						<Button color="blue-grey" outline onClick={this.toggleListModal}>Close</Button>
 					</ModalFooter>
@@ -316,7 +316,7 @@ class DetailedView extends React.Component {
 				<div className="col-md-8">
 					<div className="row">
 						<div className="col-md-12">
-							<h3><strong>{this.state.details.title}</strong>		<small>{year}</small></h3>
+							<h1 className="h2-responsive"><strong>{this.state.details.title}</strong>	|	<small>{year}</small></h1>
 						</div>
 						<br></br>
 						<div className="col-md-2 mt-2">

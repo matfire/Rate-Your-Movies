@@ -2,6 +2,7 @@ import React from 'react'
 import 'react-loading-bar/dist/index.css'
 import axios from 'axios'
 import {NotificationManager} from 'react-notifications';
+import {CardGroup} from 'mdbreact'
 import MovieCard from '../components/MovieCard'
 import {LoopingRhombusesSpinner} from 'react-epic-spinners'
 class Trending extends React.Component {

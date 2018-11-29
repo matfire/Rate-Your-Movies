@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-import {Input, Button, MDBRow, toast } from 'mdbreact';
+import {Input, Button, MDBRow, toast, MDBContainer, MDBCol, Card, CardBody, CardTitle } from 'mdbreact';
 
 class LoginView extends React.Component {
 
@@ -63,20 +63,27 @@ class LoginView extends React.Component {
 			)
 		}
 		return(
+			<MDBContainer>
 			<MDBRow center className="mt-5">
-        		<div className="md-4">
-            		<form onSubmit={this.requestLoginConfirmation}>
-              			<p className="h5 text-center mb-4">Login with your TMDB(The Movie Database) Credentials</p>
-						<div className="grey-text">
-							<Input label="Enter your TMDB account username" icon="user" group type="text" validate error="wrong" success="right" onChange={this.handleUsernameChange} required/>
-							<Input label="Type your password" icon="lock" group type="password" validate onChange={this.handlePasswordChange} required/>
-						</div>
-						<div className="text-center">
-							<Button type="submit" color="cyan">Login</Button>
-						</div>
-           			</form>
-          		</div>
-        	</MDBRow>
+        		<MDBCol md="12">
+				<h1 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">Login with your TMDB(The Movie Database) Credentials</h1>
+				</MDBCol>
+				<MDBCol md="6">
+					<Card>
+						<CardBody>
+							<form onSubmit={this.requestLoginConfirmation}>
+								<div className="grey-text p-5 pr-5 text-center">
+									<Input label="Enter your TMDB account username" group type="text" validate error="wrong" success="right" onChange={this.handleUsernameChange} required/>
+									<Input label="Type your password" group type="password" validate onChange={this.handlePasswordChange} required/>
+								
+									<Button type="submit" color="cyan">Login</Button>
+								</div>
+							</form>
+						</CardBody>
+					</Card>
+				  </MDBCol>
+			</MDBRow>
+			</MDBContainer>
 		)
 	}
 }

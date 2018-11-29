@@ -128,16 +128,17 @@ class PersonalLists extends React.Component {
 						<tr>
 							<th className="text-left">NAME</th>
 							<th className="text-left">DESCRIPTION</th>
-							<th className="text-right"></th>
+							<th className="text-right">DELATE</th>
 						</tr>
 					</thead>
 					<tbody>
 						{this.state.lists.map((list) => (
 							<tr key={list.id}>
-								<td scope="row" className="text-left"><a href={"/list/" + list.id}><strong>{list.name}</strong></a></td>
-								<td className="text-left">{list.description}</td>
+								<td scope="row" className="text-left align-middle"><a href={"/list/" + list.id} className="font-weight-bold"> {list.name}</a></td>
+								<td className="text-left align-middle">{list.description}</td>
 								
-								<td className="text-right"> <Button tag="a" floating gradient="peach" onClick={() => {this.handleDeleteList(list.id)}}><Fa icon="trash" /></Button></td>
+								<td className="text-right"><Button className="ml-0" tag="a" floating  color="red" onClick={() => {this.handleDeleteList(list.id)}}><i class="fa fa-trash-o " aria-hidden="true"></i></Button>
+								 </td>
 							</tr>
 						))}
 					</tbody>

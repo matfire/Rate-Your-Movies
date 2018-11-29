@@ -79,7 +79,7 @@ class ListDetailView extends React.Component {
 	renderMovies = () => {
 		if (this.state.details.items) {
 			const movies = this.state.details.items.map((item) => {
-				let heart_class = "fa-heart fa-3x mb-2"
+				let heart_class = "fa-heart fa-lg"
 				if (this.state.favorites[item.id] === true){
 					heart_class = "fas " + heart_class
 				} else {
@@ -96,13 +96,10 @@ class ListDetailView extends React.Component {
 							
 						</div>
 						<div className="col-sm-8 text-left pt-3">
-							<h3><a href={"/movies/" + item.id}>{item.title}</a></h3>
+							<h3><i className={heart_class} onClick={() => {this.handleFavorite(item.id)}} style={{color:"red"}}></i> <a href={"/movies/" + item.id}>{item.title}</a></h3>
 							<p>{item.overview}</p>
-							<br />
-							<i className={heart_class} onClick={() => {this.handleFavorite(item.id)}} style={{color:"red"}}></i>
-							<br />
-
-							<Button className="ml-0" tag="a" floating gradient="peach" onClick={() => this.handleRemoveFromList(item.id)}><Fa icon="trash" /></Button>
+							
+							<Button className="ml-0" tag="a" floating  color="red" onClick={() => this.handleRemoveFromList(item.id)}><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></Button>
 							
 						</div>
 						</div>
@@ -118,7 +115,7 @@ class ListDetailView extends React.Component {
 			            <div className="container">
 			            <div className="row d-flex justify-content-center">
 			            <div className="col-md-12 " style={{textAlign:"center"}}>
-			                <h1 className="h5-responsive font-weight-bold text-center text-uppercase">Your Lists</h1>
+			                <h1 className="h5-responsive font-weight-bold text-center text-uppercase">{this.state.details.name}</h1>
 			                <p className="pb-2">{this.state.details.description}</p>
 			            
 			                    {movies}

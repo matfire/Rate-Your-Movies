@@ -4,6 +4,9 @@ html, #root, .App {position: relative; min-height: 100%;}
 
 
 #top-section, .classic-tabs .nav {background-color: #000B25 !important}
+div.collapse.navbar-collapse{margin-top: 40px;}
+.navbar-toggler {padding: .25rem 0rem !important}
+.navbar-brand{max-width: 80%;}
 
 .navbar.navbar-dark .breadcrumb .nav-item .nav-link, .navbar.navbar-dark .navbar-nav .nav-item .nav-link {color: #fff; transition: 0.35s; text-transform: uppercase; font-weight: 400;letter-spacing: 2px;font-size: 12px}
 .navbar.navbar-dark form .md-form .form-control{font-size: 14px;}
@@ -21,11 +24,15 @@ html, #root, .App {position: relative; min-height: 100%;}
 i.fa.fa-star{color:#ffc107; padding-right: 5px}
 i.fa.fa-search{color:#ffffff}
 
-footer.page-footer{background: url('/images/assets/ft-bg.jpg') no-repeat;background-position: bottom center;background-size: cover;}
-footer.page-footer .footer-copyright{border-top: 1px solid rgba(255, 255, 255, 0.3) !important;background-color:transparent !important;}
+
 
 p.film {margin:0px; margin-top: 5px; margin-bottom:5px; line-height: 1em}
 h6{letter-spacing: 2px !important; font-weight: 700 !important}
-p a, td a, footer.page-footer a, h2 a, h3 a, h4 a{color:#000; text-decoration: none}
-p a:hover, td a:hover, footer.page-footer a.hover, h2 a:hover, h3 a:hover, h4 a:hover{color: #17a2b8 !important}
+p a, td a{color:#000; text-decoration: underline}
+h2 a, h3 a, h4 a,h5 a,h6 a{color:#000; text-decoration:  none}
+p a:hover, td a:hover, footer.page-footer a.hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover{color: #17a2b8 !important; text-decoration: none}
 
+footer.page-footer{background: url('/images/assets/ft-bg.jpg') no-repeat;background-position: bottom center;background-size: cover;}
+footer.page-footer .footer-copyright{border-top: 1px solid rgba(255, 255, 255, 0.3) !important;background-color:transparent !important;}
+footer.page-footer .footer-copyright a:hover{color: #17a2b8 !important;}
+.page-footer p{color: rgba(255, 255, 255, 0.6);}

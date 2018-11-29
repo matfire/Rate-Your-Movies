@@ -56,7 +56,7 @@ class HomeView extends React.Component {
 		return(
 			<React.Fragment>
 					<section className="text-center pt-5 filmtop pb-0 ">
-					{!localStorage.getItem("User") && !localStorage.getItem("jwt") && <div className="alert alert-primary" role="alert">Don't forget to connect your <a href="https://www.themoviedb.org/">TMDB</a> account to enjoy all the functionalities of the application</div>}
+					{!localStorage.getItem("User") && !localStorage.getItem("jwt") && <div className="alert alert-info" role="alert">Don't forget to connect your <a href="https://www.themoviedb.org/"><strong>TMDB</strong></a> account to enjoy all the functionalities of the application</div>}
 
 						<div className="container">
 							<h2 className="h5-responsive font-weight-bold text-center text-uppercase white-text pb-5">Playing Now</h2>
@@ -93,10 +93,11 @@ class HomeView extends React.Component {
 												</Col>
 												
 												<Col md="8" className="align-middle pl-0">
-												<p className="font-weight-bold pt-2 pl-2 pr-2 mb-0"><a href={"/persons/" + person.id}>{person.name}</a></p>
+												
+												<h4 className="card-title h5-responsive pt-2 pl-2 pr-2 mb-2"><a href={"/persons/" + person.id}>{person.name}</a></h4>
 												
 												{person.known_for.map((movie) => (
-													<p className="film pl-2 pr-2"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
+													<p className="film pl-2 pr-2 pb-2"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
 												))}
 												</Col>
 											</Row>

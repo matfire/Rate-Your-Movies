@@ -1,6 +1,9 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Fa } from "mdbreact";
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Col, Fa } from "mdbreact";
+import SearchBar from './SearchBar'
 import axios from 'axios'
+import { DropdownToggle } from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 
 
@@ -62,12 +65,13 @@ class NavBarComponent extends React.Component {
 	}
 	render() {
 		const options = this.renderLoggedInNavigation()
+		const User = JSON.parse(localStorage.getItem("User"))
 		return(
 			
 					<Navbar color=" pl-5 pr-5" dark expand="md" id="top-section">
 					<div className="container">
 						<NavbarBrand>
-				    		<a href="/" style={{color:"inherit"}}>Rate Your Movie</a>
+				    		<a href="/" style={{color:"inherit"}}><img className="img-fluid " src="/images/assets/logo.png" alt="Rate You Movie" /></a>
 						</NavbarBrand>
 						<NavbarToggler onClick={this.toggle}></NavbarToggler>
 						<Collapse isOpen={this.state.isOpen} navbar>
@@ -77,10 +81,10 @@ class NavBarComponent extends React.Component {
 						<NavbarNav left>
 							<NavItem>
 									<FormInline waves onSubmit={(e) => {e.preventDefault()}}>
-										<div className="md-form my-0">
+										<div className="md-form w-100">
 
 
-<Fa icon="search" /><input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search for a movie ..." aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
+<Fa icon="search" className="float-left mt-2" /><input className=" form-control form-control-sm w-75" type="text" placeholder="Search for a movie ..." aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
 										
 
 										</div>
@@ -92,10 +96,10 @@ class NavBarComponent extends React.Component {
 									</ListGroup>
 							</NavItem>
 						</NavbarNav>
-						<NavbarNav right>	
+						<NavbarNav left className="pt-2 pl-2">	
 							<NavItem>
 								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
-									<Button color="cyan" size="sm" onClick={() => {
+									<Button color="cyan" outline size="sm" onClick={() => {
 									localStorage.removeItem("User");
 									localStorage.removeItem("TMDB_session_id")
 									toast.success("You have been succesfully disconnected")
