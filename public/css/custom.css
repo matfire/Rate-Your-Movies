@@ -11,7 +11,7 @@ div.collapse.navbar-collapse{margin-top: 40px;}
 .navbar.navbar-dark .breadcrumb .nav-item .nav-link, .navbar.navbar-dark .navbar-nav .nav-item .nav-link {color: #fff; transition: 0.35s; text-transform: uppercase; font-weight: 400;letter-spacing: 2px;font-size: 12px}
 .navbar.navbar-dark form .md-form .form-control{font-size: 14px;}
 .navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover{color: #17a2b8 !important}
-.navbar ul.list-group{position: absolute; opacity: 1; display: block; top: 40px; z-index: 999;}
+.navbar ul.list-group{position: absolute; opacity: 1; display: block; top: 108px; z-index: 999;}
 .list-group-item a {color:#000}
 .list-group-item a:hover {color:#17a2b8}
 .filmtop{background: url('/images/assets/slider-bg.jpg') no-repeat;background-position: bottom center;background-size: cover;}
