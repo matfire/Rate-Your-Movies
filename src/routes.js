@@ -9,26 +9,23 @@ import ListDetailView from './containers/ListDetailView'
 import FavoritesView from './containers/FavoritesView'
 import HomeView from './containers/HomeView'
 import CelebrityView from './containers/CelebrityView'
-
+import NotFound from './containers/404Page'
 export default class BaseRouter extends React.Component {
 	render() {
 		return(
 						<div>
-							<Route exact path="/" component={HomeView} />
-							<Route exact path="/trending" component={Trending}/>
-							<Route exact path="/login" component={LoginView} />
 							<Switch>
+								<Route exact path="/" component={HomeView} />
+								<Route exact path="/trending" component={Trending}/>
+								<Route exact path="/login" component={LoginView} />
 								<Route exact path="/movies/search-result" render={(props) => <SearchResults {...props} query={this.props.searchQuery} />}/>
 								<Route path="/movies/:id" component={DetailedView} />
-							</Switch>
-							<Switch>
 								<Route path="/list/:id" component={ListDetailView}/>
 								<Route exact path="/list" component={PersonalLists} />
-							</Switch>
-							<Switch>
 								<Route path="/persons/:id"  component={CelebrityView}/>
+								<Route exact path="/favorites" component={FavoritesView} />
+								<Route component={NotFound} />
 							</Switch>
-							<Route exact path="/favorites" component={FavoritesView} />
 						</div>
 		)
 	}
