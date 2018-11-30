@@ -15,7 +15,7 @@ const ActorItem = (props) => {
 			<a href={"/persons/" + props.data.id}><img src={"https://image.tmdb.org/t/p/w45" + props.data.profile_path} className=" z-depth-1 float-left mr-3" alt={props.data.name} /></a>
 			<p className="pt-3"><a href={"/persons/" + props.data.id}><strong>{props.data.name}</strong></a> <em>as </em>{props.data.character}</p>
 			</div>
-			</React.Fragment>
+		</React.Fragment>
 			
 	)
 }
@@ -109,17 +109,14 @@ const CastCrewTab = (props) => {
 			
 			{props.data.cast.lengh === 0 && <p>Sorry, no info regarding cast available at the moment</p>}
 			{props.data.cast.length > 0 && props.data.cast.map((actor) => (
-				<ActorItem key={actor.id} data={actor} />
+				<ActorItem key={actor.id + 1} data={actor} />
 				))}
 			</Col>
-
 			<Col md="6">
 			<h6 className="mb-4">CREW</h6>
-			
-		
 			{CrewSort.length === 0 && <p>Sorry, no info regarding crew available at the moment</p>}
 			{CrewSort.length > 0 && CrewSort.map((crew) => (
-					<CrewItem data={crew} key={crew.id}/>
+					<CrewItem data={crew} key={crew.id + 2}/>
 				))}
 			</Col>
 			</Row>

@@ -42,7 +42,6 @@ class HomeView extends React.Component {
 			language = User.low_la + "-" + User.hi_la
 		}
 		axios.get("https://tmdb.dev.matteogassend.com/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
-			console.log("upcoming")
 			this.setState({movie_upcoming:res.data.results})
 		})
 		axios.get("https://tmdb.dev.matteogassend.com/movie/now_playing?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
@@ -109,7 +108,7 @@ class HomeView extends React.Component {
 												<h4 className="card-title h5-responsive pt-2 pl-2 pr-2 mb-2"><a href={"/persons/" + person.id}>{person.name}</a></h4>
 												
 												{person.known_for.map((movie) => (
-													<p className="film pl-2 pr-2 pb-2"><a href={"/movies/" + movie.id} key={movie.id} className="">{movie.title}</a> </p>
+													<p className="film pl-2 pr-2 pb-2" key={movie.id}><a href={"/movies/" + movie.id}  className="">{movie.title}</a> </p>
 												))}
 												</Col>
 											</Row>
