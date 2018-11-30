@@ -1,6 +1,6 @@
 import React from 'react'
-import {Table, Button} from 'reactstrap'
 import axios from 'axios'
+import {MDBRow, Spinner} from 'mdbreact'
 import {Redirect} from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
 class FavoritesView extends React.Component {
@@ -8,7 +8,8 @@ class FavoritesView extends React.Component {
 	state = {
 		results: [],
 		currentPage:1,
-		totalPages:1
+		totalPages:1,
+		loading: true
 	}
 	componentDidMount() {
 		let session = localStorage.getItem("TMDB_session_id")
@@ -17,7 +18,8 @@ class FavoritesView extends React.Component {
 			this.setState({
 				results: res.data.results,
 				currentPage: res.data.page,
-				totalPages: res.data.total_pages
+				totalPages: res.data.total_pages,
+				loading:false
 			})
 		})
 	}
@@ -43,6 +45,13 @@ class FavoritesView extends React.Component {
 		if (!session) {
 			return(
 				<Redirect to="/" />
+			)
+		}
+		if (this.state.loading) {
+			return(
+			<MDBRow center className="mt-5 pt-5">
+			<Spinner blue big />
+			</MDBRow>
 			)
 		}
 		return(

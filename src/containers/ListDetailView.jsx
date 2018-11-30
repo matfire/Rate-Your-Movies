@@ -1,14 +1,14 @@
 import React from 'react'
 import axios from 'axios'
-import { Card, CardImg, CardBody,
-	CardTitle, Button, CardText, Fa } from 'mdbreact';
+import { Card, CardBody, Button, MDBRow, Spinner } from 'mdbreact';
 import 	{NotificationManager} from 'react-notifications'
 
 
 class ListDetailView extends React.Component {
 	state = {
 		details: {},
-		favorites: {}
+		favorites: {},
+		loading:true
 	}
 	componentDidMount() {
 		let User = JSON.parse(localStorage.getItem("User"))
@@ -27,6 +27,7 @@ class ListDetailView extends React.Component {
 					this.setState({favorites})
 				})
 			})
+			this.setState({loading:false})
 			}
 		)
 	}
@@ -111,6 +112,13 @@ class ListDetailView extends React.Component {
 	}
 	render(){
 		const movies = this.renderMovies()
+		if (this.state.loading) {
+			return(
+			<MDBRow center className="mt-5 pt-5">
+			<Spinner blue big />
+			</MDBRow>
+			)
+		}
 		return(
 			            <div className="container">
 			            <div className="row d-flex justify-content-center">

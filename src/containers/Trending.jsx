@@ -1,10 +1,8 @@
 import React from 'react'
 import 'react-loading-bar/dist/index.css'
 import axios from 'axios'
-import {NotificationManager} from 'react-notifications';
-import {CardGroup} from 'mdbreact'
+import {MDBRow, Spinner, toast} from 'mdbreact'
 import MovieCard from '../components/MovieCard'
-import {LoopingRhombusesSpinner} from 'react-epic-spinners'
 class Trending extends React.Component {
 	state = {
 		data: [],
@@ -12,20 +10,22 @@ class Trending extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get("https://api.themoviedb.org/3/trending/movie/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+		axios.get("https://tmdb.dev.matteogassend.com/trending/movie/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
 			this.setState({
 				data: res.data.results,
 				loading:false
 			})
 		}).catch(err => {
-			NotificationManager.error('Something went wrong', 'There is a problem with our server. Please try reloading the page')
+			toast.error('Something went wrong. Please try reloading the page')
 			this.setState({loading:false})
 		})
 	}
 	render() {
 		if (this.state.loading) {
 			return(
-				<LoopingRhombusesSpinner />
+			<MDBRow center className="mt-5 pt-5">
+			<Spinner blue big />
+			</MDBRow>
 			)
 		}
 		return(

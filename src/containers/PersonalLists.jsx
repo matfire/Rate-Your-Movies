@@ -1,10 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import {Table} from 'reactstrap'
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Fa} from 'mdbreact'
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Fa, MDBRow, Spinner} from 'mdbreact'
 import 	{NotificationManager} from 'react-notifications'
 import {Redirect} from 'react-router-dom'
-import { insertGlobal } from 'glamor';
 class PersonalLists extends React.Component {
 	state = {
 		lists: [],
@@ -12,7 +11,8 @@ class PersonalLists extends React.Component {
 		total_pages: 1,
 		isModalOpen: false,
 		listTitle: "",
-		listDescription: ""
+		listDescription: "",
+		loading:true
 	}
 	
 	componentDidMount() {
@@ -25,7 +25,8 @@ class PersonalLists extends React.Component {
 		if (session) {
 		axios.get("https://api.themoviedb.org/3/account/" + User.id  + "/lists?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&session_id=" + localStorage.getItem("TMDB_session_id") + "&page=1").then(res => {
 			this.setState({
-				lists:res.data.results
+				lists:res.data.results,
+				loading:false
 			})
 		}).catch(err => {console.log(err)})
 	}
@@ -101,6 +102,13 @@ class PersonalLists extends React.Component {
 		if (!session) {
 			return(<Redirect to="/" />)
 		}
+		if (this.state.loading) {
+			return(
+			<MDBRow center className="mt-5 pt-5">
+			<Spinner blue big />
+			</MDBRow>
+			)
+		}
 		return(
 			<div className="container">
 			<div className="row mt-5 d-flex justify-content-center">
@@ -128,13 +136,13 @@ class PersonalLists extends React.Component {
 						<tr>
 							<th className="text-left">NAME</th>
 							<th className="text-left">DESCRIPTION</th>
-							<th className="text-right">DELATE</th>
+							<th className="text-right">DELETE</th>
 						</tr>
 					</thead>
 					<tbody>
 						{this.state.lists.map((list) => (
 							<tr key={list.id}>
-								<td scope="row" className="text-left align-middle"><a href={"/list/" + list.id} className="font-weight-bold"> {list.name}</a></td>
+								<td className="text-left align-middle"><a href={"/list/" + list.id} className="font-weight-bold"> {list.name}</a></td>
 								<td className="text-left align-middle">{list.description}</td>
 								
 								<td className="text-right"><Button className="ml-0" tag="a" floating  color="red" onClick={() => {this.handleDeleteList(list.id)}}><i class="fa fa-trash-o " aria-hidden="true"></i></Button>

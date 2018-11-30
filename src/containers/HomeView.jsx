@@ -1,19 +1,20 @@
 import React from 'react'
 import axios from 'axios'
 import MovieCard from '../components/MovieCard'
-import {Col, Carousel, CarouselItem, CarouselInner, Row} from 'mdbreact'
+import {Col, Carousel, CarouselItem, CarouselInner, Row, MDBRow, Spinner} from 'mdbreact'
 
 class HomeView extends React.Component {
 	state = {
 		movie_upcoming: [],
 		movie_playing: [],
-		trending_people: []
+		trending_people: [],
+		loading: true
 	}
 
 	createMovieSliderComponents = (data) => {
 		let sliderIndex = 1
 		let results = []
-		if (data.length === 0)
+		if (!data || data.length === 0)
 			return([])
 		for (let i = 0; i < data.length - 2; i+=3) {
 				results.push(
@@ -40,19 +41,30 @@ class HomeView extends React.Component {
 		if (User) {
 			language = User.low_la + "-" + User.hi_la
 		}
-		axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
+		axios.get("https://tmdb.dev.matteogassend.com/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
+			console.log("upcoming")
 			this.setState({movie_upcoming:res.data.results})
 		})
-		axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
+		axios.get("https://tmdb.dev.matteogassend.com/movie/now_playing?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
 			this.setState({movie_playing:res.data.results})
 		})
-		axios.get("https://api.themoviedb.org/3/trending/person/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+		axios.get("https://tmdb.dev.matteogassend.com/trending/person/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
 			this.setState({trending_people: res.data.results})
 		})
 	}
 	render() {
 		const PlayingMovieSliderItems = this.createMovieSliderComponents(this.state.movie_playing)
 		const UpComingMovieSliderItems = this.createMovieSliderComponents(this.state.movie_upcoming)
+		if (this.state.movie_playing && this.state.movie_upcoming && this.state.trending_people && this.state.loading) {
+			this.setState({loading:false})
+		}
+		if (this.state.loading) {
+			return(
+				<MDBRow center className="mt-5 pt-5">
+					<Spinner blue big />
+				</MDBRow>
+			)
+		}
 		return(
 			<React.Fragment>
 					<section className="text-center pt-5 filmtop pb-0 ">
@@ -85,7 +97,7 @@ class HomeView extends React.Component {
 							</div>
 							<div className="col-md-4">
 								<h2 className="h5-responsive font-weight-bold text-center text-uppercase pb-5">SPOTLIGHT CELEBRITIES</h2>
-									{this.state.trending_people.map((person, index) => (
+									{this.state.trending_people && this.state.trending_people.map((person, index) => (
 										index < 3 && 
 											<Row className="mb-2 border border-light" key={person.id}>
 												<Col md="4" className="pl-0 text-center">

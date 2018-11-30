@@ -1,9 +1,6 @@
 import React from 'react'
-import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Col, Fa } from "mdbreact";
-import SearchBar from './SearchBar'
+import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Fa } from "mdbreact";
 import axios from 'axios'
-import { DropdownToggle } from 'reactstrap';
-import {Link} from 'react-router-dom'
 
 
 
@@ -45,7 +42,6 @@ class NavBarComponent extends React.Component {
 		)
 	}
 	handleSearchChange = (e) => {
-		console.log(e.target.value)
 		let language = "us-US"
 		let User = JSON.parse(localStorage.getItem("User"))
 		if (User) {
@@ -65,7 +61,6 @@ class NavBarComponent extends React.Component {
 	}
 	render() {
 		const options = this.renderLoggedInNavigation()
-		const User = JSON.parse(localStorage.getItem("User"))
 		return(
 			
 					<Navbar color=" pl-5 pr-5" dark expand="md" id="top-section">

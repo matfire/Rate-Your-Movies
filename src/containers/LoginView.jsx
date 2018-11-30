@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-import {Input, Button, MDBRow, toast, MDBContainer, MDBCol, Card, CardBody, CardTitle } from 'mdbreact';
+import {Input, Button, MDBRow, toast, MDBContainer, MDBCol, Card, CardBody} from 'mdbreact';
 
 class LoginView extends React.Component {
 

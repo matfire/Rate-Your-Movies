@@ -4,7 +4,7 @@ import {Nav, Row, Col, Fa} from 'mdbreact';
 import classnames from 'classnames';
 import { ListGroup, ListGroupItem, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption, TabPane, TabContent, NavItem, NavLink} from 'mdbreact'
 import StickyBox from "react-sticky-box";
-import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner, toast } from 'mdbreact';
+import { Button, Card, CardBody, CardImage, Iframe, Modal, ModalBody, ModalHeader, ModalFooter, Spinner, toast, MDBRow } from 'mdbreact';
 import StarRatingComponent from 'react-star-rating-component';
 import Truncate from 'react-truncate';
 
@@ -75,12 +75,8 @@ class OverviewTab extends React.Component {
 		return result
 	}
 	render() {
-		const cast = this.renderCast()
 		return(
-			
-						<p>{this.props.data.overview}</p>
-						
-			
+			<p>{this.props.data.overview}</p>
 		)
 	}
 }
@@ -164,7 +160,7 @@ class DetailedView extends React.Component {
 		if (User) {
 			language = User.low_la + "-" + User.hi_la
 		}
-		axios.get("https://api.themoviedb.org/3/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&append_to_response=credits,videos,images,similar,reviews").then(res => {
+		axios.get("https://tmdb.dev.matteogassend.com/movie/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&append_to_response=credits,videos,images,similar,reviews").then(res => {
 			this.setState({
 				details:res.data,
 				loading:false
@@ -267,9 +263,9 @@ class DetailedView extends React.Component {
 		}
 		if (this.state.loading === true) {
 			return(
-				<div className="row mt-5 text-center">
+				<MDBRow center className="mt-5 pt-5">
 					<Spinner blue big />
-				</div>
+				</MDBRow>
 			)
 		}
 		return(
