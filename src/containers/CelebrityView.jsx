@@ -3,6 +3,7 @@ import {MDBRow, MDBCol, TabPane, TabContent, Nav, NavItem, NavLink, Fa, Spinner}
 import classnames from 'classnames'
 import axios from 'axios'
 import Truncate from 'react-truncate';
+import StickyBox from "react-sticky-box";
 
 
 
@@ -80,7 +81,9 @@ class CelebrityView extends React.Component {
 			<div className="container">
 				<MDBRow className="mt-5">
 					<MDBCol md="4">
+						<StickyBox offsetBottom={20} offsetTop={100}>
 						<img src={"https://image.tmdb.org/t/p/h632" + this.state.data.profile_path} alt={this.state.data.name} className="img-fluid  z-depth-2"/>
+						</StickyBox>
 					</MDBCol>
 					<MDBCol md="8">
 						<h1 className="h2-responsive">{this.state.data.name}</h1>

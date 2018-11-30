@@ -56,6 +56,8 @@ class NavBarComponent extends React.Component {
 						this.setState({searchResult:res.data.results})
 					})
 				}
+			} else if(this.state.searchQuery === "" || this.state.searchQuery.length === 0) {
+				this.setState({searchResult:[]})
 			}
 		})
 	}
@@ -77,11 +79,7 @@ class NavBarComponent extends React.Component {
 							<NavItem>
 									<FormInline waves onSubmit={(e) => {e.preventDefault()}}>
 										<div className="md-form w-100">
-
-
-<Fa icon="search" className="float-left mt-2" /><input className=" form-control form-control-sm w-75" type="text" placeholder="Search for a movie ..." aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
-										
-
+											<Fa icon="search" className="float-left mt-2" /><input className=" form-control form-control-sm w-75" type="text" placeholder="Search for a movie ..." aria-label="Search" value={this.state.searchQuery} onChange={this.handleSearchChange}/>
 										</div>
 									</FormInline>
 									<ListGroup>
