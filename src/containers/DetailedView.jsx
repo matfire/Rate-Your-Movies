@@ -294,7 +294,7 @@ class DetailedView extends React.Component {
 					</ModalFooter>
 				</Modal>
 				<div className="col-md-4 ">
-					<StickyBox offsetTop={100} offsetBottom={20}>
+					<StickyBox offsetTop={50} offsetBottom={20}>
 						<Card cascade className="ml-2 mr-2">
 							<CardImage className="img-fluid" src={"https://image.tmdb.org/t/p/w342/" + this.state.details.poster_path} alt={this.state.details.title} href={"/movies/" + this.props.match.params.id}/>
 							<CardBody className="text-center">
