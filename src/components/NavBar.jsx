@@ -1,6 +1,12 @@
 import React from 'react'
 import { Navbar, NavbarBrand, NavbarNav, NavItem, NavLink, NavbarToggler, Collapse, Button, toast, FormInline, ListGroup, ListGroupItem, Fa } from "mdbreact";
+import {
+	MDBSelect,
+	MDBSelectInput,
+	MDBSelectOptions,
+	MDBSelectOption} from 'mdbreact'
 import axios from 'axios'
+import options from '../languages'
 
 
 
@@ -8,10 +14,19 @@ class NavBarComponent extends React.Component {
 	state = {
 		isOpen:false,
 		searchQuery: "",
-		searchResult: []
+		searchResult: [],
+		langOptions: options
 	}
 	toggle = () => {
 		this.setState({isOpen: !this.state.isOpen})
+	}
+	setSelectedLanguage = (e) => {
+		console.log(e[0])
+		let User = JSON.parse(localStorage.getItem("User"))
+		if (User) {
+			User.low_la = e[0]
+			localStorage.setItem("User", JSON.stringify(User))
+		}
 	}
 	renderLoggedInNavigation = () => {
 		const session = localStorage.getItem("TMDB_session_id")
@@ -98,6 +113,16 @@ class NavBarComponent extends React.Component {
 									toast.success("You have been succesfully disconnected")
 									this.setState({isOpen: this.state.isOpen})
 									}}>Logout</Button>}
+							</NavItem>
+							<NavItem>
+								{localStorage.getItem("User") && localStorage.getItem("TMDB_session_id") &&
+									<MDBSelect selected="Choose your language"  getValue={this.setSelectedLanguage}>
+										<MDBSelectInput selected="Choose your language" className="text-white"/>
+										<MDBSelectOptions search={true}>
+											{this.state.langOptions}
+										</MDBSelectOptions>
+									</MDBSelect>
+							}
 							</NavItem>
 						</NavbarNav>
 						</Collapse>

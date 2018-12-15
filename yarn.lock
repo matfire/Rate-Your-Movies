@@ -5270,6 +5270,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+iso-639-1@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/iso-639-1/-/iso-639-1-2.0.3.tgz#72dd3448ac5629c271628c5ac566369428d6ccd0"
+  integrity sha512-PZhOTDH05ZLJyCqxAH65EzGaLO801KCvoEahAFoiqlp2HmnGUm8sO19KwWPCiWd3odjmoYd9ytzk2WtVYgWyCg==
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -5969,6 +5974,11 @@ kleur@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-2.0.2.tgz#b704f4944d95e255d038f0cb05fb8a602c55a300"
   integrity sha512-77XF9iTllATmG9lSlIv0qdQ2BQ/h9t0bJllHlbvsQ0zUWfU7Yi0S8L5JXzPZgkefIiajLmBJJ4BsMJmqcf7oxQ==
+
+language-list@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/language-list/-/language-list-0.0.3.tgz#2327049bd339d8bd3ae15fdedfc3fab87e9fb908"
+  integrity sha1-IycEm9M52L064V/e38P6uH6fuQg=
 
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"

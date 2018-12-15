@@ -233,7 +233,6 @@ class DetailedView extends React.Component {
 		return result
 	}
 	setSelectedList = (e) => {
-		console.log(e)
 		this.setState({
 			listSelectedId: e})
 	}

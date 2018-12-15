@@ -18,7 +18,7 @@ class HomeView extends React.Component {
 			return([])
 		for (let i = 0; i < data.length - 2; i+=3) {
 				results.push(
-					<CarouselItem itemId={sliderIndex.toString()}>
+					<CarouselItem itemId={sliderIndex.toString()} key={data[i]["id"]}>
 						<Col md="4">
 							<MovieCard data={data[i]} />
 						</Col>
@@ -39,7 +39,7 @@ class HomeView extends React.Component {
 		let User = JSON.parse(localStorage.getItem("User"))
 		let language="en-US"
 		if (User) {
-			language = User.low_la + "-" + User.hi_la
+			language = User.low_la
 		}
 		axios.get("https://tmdb.dev.matteogassend.com/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
 			this.setState({movie_upcoming:res.data.results})
