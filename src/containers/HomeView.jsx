@@ -41,13 +41,13 @@ class HomeView extends React.Component {
 		if (User) {
 			language = User.low_la + "-" + User.hi_la
 		}
-		axios.get("https://tmdb.dev.matteogassend.com/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
+		axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
 			this.setState({movie_upcoming:res.data.results})
 		})
-		axios.get("https://tmdb.dev.matteogassend.com/movie/now_playing?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
+		axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=2005b3a7fc676c3bd69383469a281eff&language="+ language +"&page=1").then(res => {
 			this.setState({movie_playing:res.data.results})
 		})
-		axios.get("https://tmdb.dev.matteogassend.com/trending/person/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+		axios.get("https://api.themoviedb.org/3/trending/person/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
 			this.setState({trending_people: res.data.results})
 		})
 	}

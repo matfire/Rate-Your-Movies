@@ -10,7 +10,7 @@ class Trending extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get("https://tmdb.dev.matteogassend.com/trending/movie/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
+		axios.get("https://api.themoviedb.org/3/trending/movie/day?api_key=2005b3a7fc676c3bd69383469a281eff").then(res => {
 			this.setState({
 				data: res.data.results,
 				loading:false

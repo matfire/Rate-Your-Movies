@@ -60,7 +60,7 @@ class CelebrityView extends React.Component {
 		if (User) {
 			language = User.low_la + "-" + User.hi_la
 		}
-		axios.get("https://tmdb.dev.matteogassend.com/person/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&append_to_response=movie_credits").then(res => {
+		axios.get("https://api.themoviedb.org/3/person/" + this.props.match.params.id + "?api_key=2005b3a7fc676c3bd69383469a281eff&language=" + language + "&append_to_response=movie_credits").then(res => {
 			this.setState({data:res.data, loading:false})
 		})
 	}
