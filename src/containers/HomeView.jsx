@@ -107,9 +107,9 @@ class HomeView extends React.Component {
 												
 												<h4 className="card-title h5-responsive pt-2 pl-2 pr-2 mb-2"><a href={"/persons/" + person.id}>{person.name}</a></h4>
 												
-												{person.known_for.map((movie) => (
+												{/* { person.known_for && person.known_for.map((movie) => (
 													<p className="film pl-2 pr-2 pb-2" key={movie.id}><a href={"/movies/" + movie.id}  className="">{movie.title}</a> </p>
-												))}
+												))} */}
 												</Col>
 											</Row>
 										
